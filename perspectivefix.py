@@ -14,7 +14,7 @@ def order_points(corners,ids):
     # such that the first entry in the list is the top-left,
     # the second entry is the top-right, the third is the
     # bottom-right, and the fourth is the bottom-left
-    rect = []
+    rect = [[0,0],[0,0],[0,0],[0,0]]
     for i in range(3):
         if(ids[i]==14):
             rect[0]= corners[i][0][0]
@@ -68,6 +68,7 @@ def main():
     sizex = 1/2
     sizey = 1/2
     #backSub = cv2.createBackgroundSubtractorMOG2()
+    rect = None
     while(cap.isOpened()):
         ret, frame = cap.read()
 
@@ -77,16 +78,18 @@ def main():
         aruco_dict = aruco.Dictionary_get(aruco.DICT_ARUCO_ORIGINAL)
         parameters =  aruco.DetectorParameters_create()
         corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, aruco_dict, parameters=parameters)
-        print(corners)
+        #print(corners)
         if(not(calculated) and len(corners)==4):
             rect = order_points(corners,ids)
-            for j in range(3):
-                x,y = rect[j]
-                cv2.circle(resized, (x,y), 10, (0, 255, 0))
-            print(corners)
-            M,maxWidth, maxHeight = four_point_transform(corners,ids)
-            frame = cv2.warpPerspective(frame, M, (maxWidth, maxHeight))
+            
+            #M,maxWidth, maxHeight = four_point_transform(corners,ids)
+            #frame = cv2.warpPerspective(frame, M, (maxWidth, maxHeight))
             calculated = True
+        if calculated and rect!=None:
+            for j in range(4):
+                x,y = rect[j]
+                cv2.circle(resized, (x,y), 20, (0, 255, 0))
+                print((x,y))
         resized = aruco.drawDetectedMarkers(resized, corners, ids)
         cv2.imshow('mask_blur', resized)
 
