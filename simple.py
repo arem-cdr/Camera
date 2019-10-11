@@ -38,8 +38,6 @@ def simple():
                     continue
                 
                 i+=1
-            
-            
                 # compute the rotated bounding box of the contour
                 box = cv2.minAreaRect(c)
                 box = cv2.boxPoints(box) 

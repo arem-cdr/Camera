@@ -60,7 +60,7 @@ def four_point_transform(cornes,ids):
     M = cv2.getPerspectiveTransform(rect, dst)
     return M,maxHeight,maxWidth
 
-def loc():
+def main():
     calculated = False
     M= None
     # Select video source/file.
@@ -70,21 +70,20 @@ def loc():
     #backSub = cv2.createBackgroundSubtractorMOG2()
     while(cap.isOpened()):
         ret, frame = cap.read()
-        
-        
-         
+
         #fgMask = backSub.apply(frame)
         resized = cv2.resize(frame, (0, 0), fx=sizex,fy=sizey) 
         gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
         aruco_dict = aruco.Dictionary_get(aruco.DICT_ARUCO_ORIGINAL)
         parameters =  aruco.DetectorParameters_create()
         corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, aruco_dict, parameters=parameters)
+        print(corners)
         if(not(calculated) and len(corners)==4):
-            return corners
             rect = order_points(corners,ids)
             for j in range(3):
                 x,y = rect[j]
                 cv2.circle(resized, (x,y), 10, (0, 255, 0))
+            print(corners)
             M,maxWidth, maxHeight = four_point_transform(corners,ids)
             frame = cv2.warpPerspective(frame, M, (maxWidth, maxHeight))
             calculated = True
@@ -97,3 +96,6 @@ def loc():
         
     cap.release()
     cv2.destroyAllWindows()
+
+
+main()
