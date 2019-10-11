@@ -28,7 +28,7 @@ def main():
             # boom, fonction qui retrouve les coins des qrcode aruco.
             corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, aruco_dict, parameters=parameters)
 
-            # ici on affiche les rectangle + le calcul de distance
+            # ici on affiche les rectangles + le calcul de distance
             ox,oy =0,0
             rx,ry = 0,0
             for i in range(len(corners)):
