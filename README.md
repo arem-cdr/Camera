@@ -14,11 +14,19 @@
 - perspectivefix.py (cherche à corriger la perspective d'une caméra en utilisant une calibration initiale à l'aide de 4 aruco)
 
   - [x] Regarder à https://answers.opencv.org/question/136796/turning-aruco-marker-in-parallel-with-camera-plane/
-  
-  - [ ] Recup correctement les coins du rectangle formé par les 4 aruco
-  
-  - [ ] Effectuer la correction avec les fonctions getPerspectiveTransform() & warpPerspective()
+  - [x] Recup correctement les coins du rectangle formé par les 4 aruco
+  - [x] Effectuer la correction avec les fonctions getPerspectiveTransform() & warpPerspective()
 
+
+- gobleperspective.py (cherche à extraire les goblets de l'image)
+
+  - [ ] Extraire les goblels du fond grâce aux couleurs
+  - [ ] Extraire le centre de chaque goblet grâce à leur base
+  - [ ] Déterminer si le goblet est allongé
+  
+  
+ - robotperspective.py (cherche à extraire les robots)
+ 
 **Scripts pas encore dev**
 
 - combine_deux_camera.py
