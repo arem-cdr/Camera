@@ -125,7 +125,7 @@ def main():
     calculated = False
     M = None
     # Select video source/file.
-    cap = cv2.VideoCapture("v13.mov")
+    cap = cv2.VideoCapture("v14.mov")
     sizex = 1/2
     sizey = 1/2
     #backSub = cv2.createBackgroundSubtractorMOG2()
@@ -141,7 +141,7 @@ def main():
         parameters =  aruco.DetectorParameters_create()
         corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, aruco_dict, parameters=parameters)
    
-        if((not(calculated) or (i<40)) and len(corners)==5):
+        if((not(calculated) or (i<40)) and len(corners)==4):
             rect = order_points(corners,ids)
             M,maxWidth, maxHeight = four_point_transform(rect)
             warped = cv2.warpPerspective(resized, M, (maxHeight,maxWidth))
@@ -156,12 +156,8 @@ def main():
         
         cv2.imshow('mask_blur', resized)
         try:
-            wcorners, wids, wrejectedImgPoints = aruco.detectMarkers(warped, aruco_dict, parameters=parameters)
-            warped = aruco.drawDetectedMarkers(warped, wcorners, wids)
-            (cx,cy) = getcxcy(wcorners,wids)
-            cv2.circle(warped, (cx,cy), 10, (0, 0, 255))
-            v = round(distance([0,0], [cx,cy]),2)
-            cv2.putText(warped, "{}".format((cx,cy)), (int(cx), int(cy-40)),cv2.FONT_HERSHEY_SIMPLEX, 0.55, (240, 0, 159), 2)
+            warped[:,:,2] = 0
+            warped[:,:,0] = 0
             cv2.imshow('warped', warped)
         except:
             pass
