@@ -17,6 +17,7 @@ def minY(l):
     return min([l[i][1] for i in range(len(l))])
 def distance(v1,v2):
     return ((v1[0]-v2[0])**2 + (v1[1]-v2[1])**2)**(0.5)
+#TEST
 def order_points(corners,ids):
     # initialzie a list of coordinates that will be ordered
     # such that the first entry in the list is the top-left,
