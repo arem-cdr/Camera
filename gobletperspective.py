@@ -108,8 +108,6 @@ def order_points(corners,ids):
             rect[3] = minpoint
 
         
-
-        
     return rect
     # return the ordered coordinates
    
