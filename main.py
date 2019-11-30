@@ -23,8 +23,8 @@ def main():
         ret, frame = cap.read()
         resized = cv2.resize(frame, (0, 0), fx=sizex,fy=sizey) 
         if(not(calculated) or (i<40)):
-                result = calibobj.genCalibration(resized)
-                calculated = result
+            result = calibobj.genCalibration(resized)
+            calculated = result
         if calculated:
             warped = calibobj.applyCalibration(resized)
             cv2.imshow('corrected', warped)
