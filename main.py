@@ -6,23 +6,32 @@ from imutils import perspective
 from imutils import contours
 from cv2 import aruco
 import math  
+import yaml 
 from calibrator import *
 
 # Here we build the code that calls other scripts to do all the work
 
 def main():
+    raw = ""
+    with open("config.yml", 'r') as ymlfile:
+        raw = yaml.load(ymlfile)
     cap = cv2.VideoCapture("v14.mov")
     sizex = 1/2
     sizey = 1/2
     calculated = False
-    sizeXmm = 49
-    sizeYmm = 58
+    sizeXmm = raw['sizeXmm']
+    sizeYmm = raw['sizeYmm']
+    matrix = raw['matrix']
     calibobj = Calib(13,11,15,14,sizeXmm*10,sizeYmm*10)
+    if(matrix ==1):
+        calibobj.M = np.load(raw['matrix_file'])
+        i = 40
+        calculated = True
     i = 0
     while(cap.isOpened()):
         ret, frame = cap.read()
         resized = cv2.resize(frame, (0, 0), fx=sizex,fy=sizey) 
-        if(not(calculated) or (i<40)):
+        if(not(calculated) | (i<40)):
             result = calibobj.genCalibration(resized)
             calculated = result
         if calculated:

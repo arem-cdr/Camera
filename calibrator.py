@@ -24,14 +24,15 @@ class Calib(object):
         corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, aruco_dict, parameters=parameters)
         if(len(corners)==4):
             self.rect = getRect(corners,ids,self.toplid,self.toprid,self.lowrid,self.lowlid)
-            self.M,self.maxWidth,self.maxHeight = four_point_transform(self.rect,self.maxHeight,self.maxWidth)
+            self.M,self.maxHeight,self.maxWidth = four_point_transform(self.rect,self.maxHeight,self.maxWidth)
             return True
         else:
             return False
     def applyCalibration(self,img):
-        corrected = cv2.warpPerspective(img, self.M, (self.maxHeight,self.maxWidth))
+        corrected = cv2.warpPerspective(img, self.M, (self.maxWidth,self.maxHeight))
         return corrected
-
+    def saveMat():
+        np.save('calib_matrix.npy',self.M)
 
 
 def four_point_transform(rect,maxHeight,maxWidth):

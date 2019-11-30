@@ -1,0 +1,14 @@
+
+debug: 1 
+# 1 to enable debug
+
+matrix: 0
+# 1 to load from file
+
+sizeXmm: 49
+
+sizeYmm: 58
+
+matrix_file: "calib_matrix.npy"
+
+
