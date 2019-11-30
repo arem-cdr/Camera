@@ -7,6 +7,42 @@ from imutils import contours
 from cv2 import aruco
 import math  
 
+
+
+def contourFinder(resized):
+    gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
+    gray = cv2.GaussianBlur(gray,(7,7),0)
+    edged = cv2.Canny(gray, 50, 100)
+    edged = cv2.dilate(edged, None, iterations=1)
+    edged = cv2.erode(edged, None, iterations=1)
+    # find contours in the edge map
+    cnts = cv2.findContours(edged.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+    cnts = imutils.grab_contours(cnts)
+    # loop over the contours individually
+  
+    for c in cnts:
+        
+    
+        
+       
+        # compute the rotated bounding box of the contour
+        box = cv2.minAreaRect(c)
+        box = cv2.boxPoints(box) 
+        box = np.array(box, dtype="int")
+        box = perspective.order_points(box)
+    
+        # compute the center of the bounding box
+        (tl, tr, br, bl) = box
+        tx,ty = tl
+        cX = np.average(box[:, 0])
+        cY = np.average(box[:, 1])
+        cv2.putText(resized, "{},{}".format(int(cX), int(cY)), (int(tx)-10, int(ty)-10),cv2.FONT_HERSHEY_SIMPLEX, 0.55, (240, 0, 159), 2)
+        cv2.drawContours(resized, [box.astype("int")], -1, (0, 255, 0), 2)
+
+
+
+
+
 def maxX(l):
     return max([l[i][0] for i in range(len(l))])
 def maxY(l):
@@ -157,9 +193,9 @@ def main():
         
         cv2.imshow('mask_blur', resized)
         try:
-            warped[warped[:,:,1] <=80] = 0
-            warped[(warped[:,:,1] >=200)]  = 0
-            
+            #warped[warped[:,:,1] <=80] = 0
+            #warped[(warped[:,:,1] >=200)]  = 0
+            contourFinder(warped)
             cv2.imshow('warped', warped)
         except:
             pass
