@@ -13,7 +13,7 @@ from calibrator import *
 
 def main():
     # Opening data stream
-    cap = cv2.VideoCapture("v14.mov")
+    cap = cv2.VideoCapture("raw/v14.mov")
     sizex = 1/2
     sizey = 1/2
 
@@ -62,7 +62,7 @@ def main():
             cv2.imshow('corrected', warped)
 
             # Track robot
-            
+
 
 
         i += 1
