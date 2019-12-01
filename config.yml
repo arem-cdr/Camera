@@ -2,7 +2,7 @@
 debug: 1 
 # 1 to enable debug
 
-matrix: 0
+matrix: 1
 # 1 to load from file
 
 sizeXmm: 49

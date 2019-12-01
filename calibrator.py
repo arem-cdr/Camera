@@ -31,7 +31,7 @@ class Calib(object):
     def applyCalibration(self,img):
         corrected = cv2.warpPerspective(img, self.M, (self.maxWidth,self.maxHeight))
         return corrected
-    def saveMat():
+    def saveMat(self):
         np.save('calib_matrix.npy',self.M)
 
 
