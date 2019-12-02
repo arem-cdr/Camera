@@ -67,15 +67,23 @@ def main():
             mask = cv2.inRange(hsv,(0,80,40),(255,255,255))
             res = cv2.bitwise_and(warped,warped, mask= mask)
             gray = cv2.cvtColor(res, cv2.COLOR_BGR2GRAY)
-            gray = cv2.GaussianBlur(gray, (7,7), 0)
+            gray = cv2.GaussianBlur(gray, (9,9), 3)
             edged = cv2.Canny(gray, 50, 100)
-            edged = cv2.dilate(edged, None, iterations=1)
-            edged = cv2.erode(edged, None, iterations=2)
+            edged = cv2.dilate(edged, None, iterations=4)
+            edged = cv2.erode(edged, None, iterations=1)
             # find contours in the edge map
-            cnts = cv2.findContours(edged.copy(), cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE  )
+            cnts = cv2.findContours(edged.copy(), cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE )
             cnts = imutils.grab_contours(cnts)
             # loop over the contours individually
-            cv2.drawContours(res, cnts, -1, (0,255,0), 3)
+            for c in cnts:
+          
+                if(cv2.contourArea(c) <2500):
+                    continue
+                box = cv2.minAreaRect(c)
+                box = cv2.boxPoints(box) 
+                box = np.array(box, dtype="int")
+                cv2.drawContours(res, [box.astype("int")], -1, (0, 255, 0), 2)
+            cv2.drawContours(res, cnts, -1, (255,0,0), 3)
             cv2.imshow('filtered red2', res)
             # Goblet vert
             green = warped.copy()
