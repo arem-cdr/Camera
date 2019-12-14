@@ -109,10 +109,8 @@ def main():
             cv2.imshow('ress', res)
             gray = cv2.cvtColor(res, cv2.COLOR_BGR2GRAY)
             gray = cv2.GaussianBlur(gray, (15,15), b)
-            print(b)
             cv2.imshow('resss', gray)
             ratio = 3
-         
             edged = cv2.Canny(gray, lowthreshold, lowthreshold*ratio)
             cv2.imshow('edged 1', edged)
             edged = cv2.dilate(edged, None, iterations=diter)
