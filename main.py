@@ -43,7 +43,7 @@ def main():
     # Generating tracker object
     trak = Tracker() 
     gex = GExtractors() 
-    gex.debug_init("real")
+    #gex.debug_init("real")
     i = 0
     while(cap.isOpened()):
         # Reading frame from stream
@@ -70,7 +70,7 @@ def main():
             #####################################################################################
             # TEMP ZONE
             #####################################################################################
-            gex.debug(warped)
+            gex.draw(warped)
             #####################################################################################
         i += 1
         cv2.imshow('real', resized)
