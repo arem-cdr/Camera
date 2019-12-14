@@ -12,11 +12,34 @@ from track import *
 
 # Here we build the code that calls other scripts to do all the work
 
+
+
+b = 4
+lowthreshold = 10
+diter = 5
+eiter = 1
+cv2.namedWindow("real")
+def on_b(val):
+    pass
+
+cv2.createTrackbar("h1", "real" , 0, 255, on_b)
+cv2.createTrackbar("s1", "real" , 80, 255, on_b)
+cv2.createTrackbar("v1", "real" , 40, 255, on_b)
+
+cv2.createTrackbar("h2", "real" , 255,255, on_b)
+cv2.createTrackbar("s2", "real" , 255, 255, on_b)
+cv2.createTrackbar("v2", "real" , 255, 255, on_b)
+
+cv2.createTrackbar("blur", "real" , 4, 10, on_b)
+cv2.createTrackbar("diter", "real" , 5, 10, on_b)
+cv2.createTrackbar("eiter", "real" , 1, 10, on_b)
+cv2.createTrackbar("lowth", "real" , 10, 100, on_b)
+
 def main():
     # Opening data stream
-    cap = cv2.VideoCapture("raw/v14.mov")
-    sizex = 1/2
-    sizey = 1/2
+    cap = cv2.VideoCapture("raw/v14.MOV")
+    sizex =1/2
+    sizey =1/2
 
     # Loading data from config.yml
     raw = ""
@@ -42,10 +65,22 @@ def main():
 
     i = 0
     while(cap.isOpened()):
+        b = cv2.getTrackbarPos("blur", "real" )
+        diter = cv2.getTrackbarPos("diter", "real")
+        eiter = cv2.getTrackbarPos("eiter", "real" )
+        lowthreshold = cv2.getTrackbarPos("lowth", "real" )
 
+        h1 = cv2.getTrackbarPos("h1", "real")
+        s1 = cv2.getTrackbarPos("s1", "real" )
+        v1 = cv2.getTrackbarPos("v1", "real" )
+
+        h2 = cv2.getTrackbarPos("h2", "real")
+        s2 = cv2.getTrackbarPos("s2", "real" )
+        v2 = cv2.getTrackbarPos("v2", "real" )
         # Reading frame from stream
         ret, frame = cap.read()
-
+        if(not(frame.any())):
+            continue
         # Resizing image
         resized = cv2.resize(frame, (0, 0), fx=sizex,fy=sizey) 
 
@@ -63,40 +98,44 @@ def main():
             # Applying perspective correction matrix to frame
             warped = calibobj.applyCalibration(resized)
             cv2.imshow('fixed', warped)
+
+
+            #####################################################################################
+            # TEMP ZONE
+            #####################################################################################
             hsv = cv2.cvtColor(warped,cv2.COLOR_BGR2HSV)
-            mask = cv2.inRange(hsv,(0,80,40),(255,255,255))
+            mask = cv2.inRange(hsv,(h1,s1,v1),(h2,s2,v2))
             res = cv2.bitwise_and(warped,warped, mask= mask)
+            cv2.imshow('ress', res)
             gray = cv2.cvtColor(res, cv2.COLOR_BGR2GRAY)
-            gray = cv2.GaussianBlur(gray, (9,9), 3)
-            edged = cv2.Canny(gray, 50, 100)
-            edged = cv2.dilate(edged, None, iterations=4)
-            edged = cv2.erode(edged, None, iterations=1)
+            gray = cv2.GaussianBlur(gray, (15,15), b)
+            print(b)
+            cv2.imshow('resss', gray)
+            ratio = 3
+         
+            edged = cv2.Canny(gray, lowthreshold, lowthreshold*ratio)
+            cv2.imshow('edged 1', edged)
+            edged = cv2.dilate(edged, None, iterations=diter)
+            edged = cv2.erode(edged, None, iterations=eiter)
+            cv2.imshow('edged 2', edged)
             # find contours in the edge map
             cnts = cv2.findContours(edged.copy(), cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE )
             cnts = imutils.grab_contours(cnts)
             # loop over the contours individually
             for c in cnts:
           
-                if(cv2.contourArea(c) <2500):
+                if(cv2.contourArea(c) <3000):
+                    continue
+                if(cv2.contourArea(c) >8000):
                     continue
                 box = cv2.minAreaRect(c)
                 box = cv2.boxPoints(box) 
                 box = np.array(box, dtype="int")
                 cv2.drawContours(res, [box.astype("int")], -1, (0, 255, 0), 2)
-            cv2.drawContours(res, cnts, -1, (255,0,0), 3)
+            #cv2.drawContours(res, cnts, -1, (255,0,0), 3)
             cv2.imshow('filtered red2', res)
-            # Goblet vert
-            green = warped.copy()
-            green[green[:,:,1] <=80] = 0
-            green[(green[:,:,1] >=200)]  = 0
-            cv2.imshow('filtered green', green)
-
-            # Goblet rouge
-            red = warped
-            red[red[:,:,2] <=70] = 0
-            red[(red[:,:,2] >=220)]  = 0
-            cv2.imshow('filtered red', red)
-
+            
+            #####################################################################################
         i += 1
         cv2.imshow('real', resized)
         if cv2.waitKey(1) & 0xFF == ord('q'):

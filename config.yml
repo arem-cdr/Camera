@@ -6,9 +6,10 @@ matrix: 1
 # 1 to load from file
 
 sizeXmm: 49
-
 sizeYmm: 58
+# Always needed 
+
 
 matrix_file: "calib_matrix.npy"
-
+# Required for loading and saving calibrator obj
 
