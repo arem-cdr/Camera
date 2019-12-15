@@ -13,7 +13,7 @@ from gextractor import *
 
 def main():
     # Opening data stream
-    cap = cv2.VideoCapture("raw/v14.MOV")
+    cap = cv2.VideoCapture("raw/v12.MOV")
     sizex =1/2
     sizey =1/2
 
@@ -37,7 +37,7 @@ def main():
         calculated = True
 
     # Generating tracker object
-    trak = Tracker() 
+    track = Tracker() 
     gex = GExtractors() 
     gex.debug_init("test","test1")
     i = 0
@@ -67,6 +67,8 @@ def main():
             # TEMP ZONE
             #####################################################################################
             gex.debug(warped,"test","test1")
+            aruco = track.draw(warped)
+            cv2.imshow('aruco', aruco)
             #####################################################################################
         i += 1
         cv2.imshow('real', resized)
