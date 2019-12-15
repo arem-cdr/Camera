@@ -11,10 +11,6 @@ from gextractor import *
 
 # Here we build the code that calls other scripts to do all the work
 
-
-
-
-
 def main():
     # Opening data stream
     cap = cv2.VideoCapture("raw/v14.MOV")
@@ -43,7 +39,7 @@ def main():
     # Generating tracker object
     trak = Tracker() 
     gex = GExtractors() 
-    #gex.debug_init("real")
+    gex.debug_init("test","test1")
     i = 0
     while(cap.isOpened()):
         # Reading frame from stream
@@ -70,7 +66,7 @@ def main():
             #####################################################################################
             # TEMP ZONE
             #####################################################################################
-            gex.draw(warped)
+            gex.debug(warped,"test","test1")
             #####################################################################################
         i += 1
         cv2.imshow('real', resized)
