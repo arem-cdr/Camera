@@ -1,4 +1,4 @@
-from scipy.spatial import distance as dist
+
 import numpy as np
 import cv2
 
@@ -8,12 +8,13 @@ import yaml
 from calibrator import *
 from track import *
 from gextractor import *
+from dextractor import *
 
 # Here we build the code that calls other scripts to do all the work
 
 def main():
     # Opening data stream
-    cap = cv2.VideoCapture("raw/v12.MOV")
+    cap = cv2.VideoCapture("raw/v14.MOV")
     sizex =1/2
     sizey =1/2
 
@@ -35,9 +36,11 @@ def main():
         calibobj.M = np.load(raw['matrix_file'])
         i = 40
         calculated = True
-
-    # Generating tracker object
+    # Generating data object (to stock collected data)
+    data = DataExtractor()
+    # Generating tracker object (for aruco detection)
     track = Tracker() 
+    # Generating Gextractor object (for 'goblet' detection)
     gex = GExtractors() 
     gex.debug_init("test","test1")
     i = 0
