@@ -2,14 +2,20 @@
 debug: 1 
 # 1 to enable debug
 
+###############################################################
 matrix: 1
 # 1 to load from file
 
-sizeXmm: 49
-sizeYmm: 58
+sizeXmm: 490
+sizeYmm: 580
 # Always needed 
 
+idtl: 13
+idtr: 11
+iddr: 15
+iddl: 14
 
 matrix_file: "calib_matrix.npy"
 # Required for loading and saving calibrator obj
-
+###############################################################
+sub_file: "background.png"

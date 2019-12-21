@@ -1,36 +1,38 @@
 
 import numpy as np
 import cv2
-
+import time
 from cv2 import aruco
 import math  
 import yaml 
 from calibrator import *
 from track import *
 from gextractor import *
+from gextractorNG import *
 from dextractor import *
 
 # Here we build the code that calls other scripts to do all the work
 
 def main():
     # Opening data stream
-    cap = cv2.VideoCapture("raw/v14.MOV")
+    cap = cv2.VideoCapture("raw/video11.h254")
     sizex =1/2
     sizey =1/2
-
     # Loading data from config.yml
     raw = ""
     with open("config.yml", 'r') as ymlfile:
         raw = yaml.load(ymlfile)
-    
     calculated = False
     sizeXmm = raw['sizeXmm']
     sizeYmm = raw['sizeYmm']
     matrix = raw['matrix']
+    tl = raw['idtl']
+    tr = raw['idtr']
+    dr = raw['iddr']
+    dl = raw['iddl']
 
     # Generating Calibration object
-    calibobj = Calib(13,11,15,14,sizeXmm*10,sizeYmm*10) 
-
+    calibobj = Calib(tl,tr,dr,dl,sizeXmm,sizeYmm)
     # Loading perspective correction matrix from file if exits
     if(matrix ==1):
         calibobj.M = np.load(raw['matrix_file'])
@@ -40,23 +42,27 @@ def main():
     data = DataExtractor()
     # Generating tracker object (for aruco detection)
     track = Tracker() 
-    # Generating Gextractor object (for 'goblet' detection)
-    gex = GExtractors() 
-    gex.debug_init("test","test1")
+    # Generating Gextractor object (for 'gobelet' detection)
+    #gex.debug_init("test","test1")
     i = 0
     while(cap.isOpened()):
-        # Reading frame from stream
+        # Reading frame from video stream
         ret, frame = cap.read()
-        if(not(frame.any())):
-            continue
+        if(frame is None):
+            break
         # Resizing image
         resized = cv2.resize(frame, (0, 0), fx=sizex,fy=sizey) 
-
-        # Checking if we have calculate perspective correction matrxix
+        #aruco = track.draw(resized)
+        #gex.debug(resized,"test","test1")
+        if(i==0):
+            gex = NGExtractors(resized) 
+        gex.draw(resized)
+        # Checking if we have calculate perspective correction matrix
         if(not(calculated) | (i<40)):
 
             # Calculating perspective correction matrix and saving it
             result = calibobj.genCalibration(resized)
+            
             calculated = result
             if(calculated):
                 calibobj.saveMat()
@@ -69,11 +75,12 @@ def main():
             #####################################################################################
             # TEMP ZONE
             #####################################################################################
-            gex.debug(warped,"test","test1")
-            aruco = track.draw(warped)
-            cv2.imshow('aruco', aruco)
+            #gex.debug(warped,"test","test1")
+            
+            #cv2.imshow('aruco', aruco)
             #####################################################################################
         i += 1
+      
         cv2.imshow('real', resized)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break

@@ -67,12 +67,12 @@ class GExtractors(object):
             pass
 
         cv2.createTrackbar("h1", framename , 0, 255, on_b)
-        cv2.createTrackbar("s1", framename , 80, 255, on_b)
-        cv2.createTrackbar("v1", framename , 40, 255, on_b)
+        cv2.createTrackbar("s1", framename , 183, 255, on_b)
+        cv2.createTrackbar("v1", framename , 0, 255, on_b)
 
         cv2.createTrackbar("h2", framename , 255,255, on_b)
         cv2.createTrackbar("s2", framename, 255, 255, on_b)
-        cv2.createTrackbar("v2", framename, 255, 255, on_b)
+        cv2.createTrackbar("v2", framename, 182, 255, on_b)
 
         cv2.createTrackbar("blur", framename, 4, 10, on_b)
         cv2.namedWindow(framename1)

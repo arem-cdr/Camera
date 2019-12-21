@@ -16,13 +16,18 @@ class DataExtractor(object):
         p = self.records[str(arucoid)]
         v = [0]
         for i in range(1,len(p)-1):
+            vx = (p[i+1].x-p[i].x)/(p[i+1].t-p[i].t)
+            vy = (p[i+1].y-p[i].y)/(p[i+1].t-p[i].t)
+            vp = Point(vx,vy,p[i+1].t)
+            v.append(vp)
             pass   
-
+        v.append(0)
         return v
 
     def plotvelocity(self,arucoid):
         v = self.genVelocity(arucoid)
-        plt.plot(v)
+        t =  [x.t for x in v]
+        plt.plot(t,v)
         plt.show()
         
 
@@ -36,7 +41,10 @@ class DataExtractor(object):
 
 
 class Point(object):
-    def  __init__(self,x,y):
+    def  __init__(self,x,y,t =None ):
         self.x = x
         self.y = y 
-        self.t = datetime.datetime.now()
+        if(t==None):
+            self.t = datetime.datetime.now()
+        else:
+            self.t = t
