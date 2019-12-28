@@ -3,7 +3,6 @@ import cv2
 from cv2 import aruco
 import numpy as np
 import imutils
-from imutils import perspective
 from imutils import contours
 
 

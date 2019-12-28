@@ -2,7 +2,19 @@
 debug: 1 
 # 1 to enable debug
 
+
 ###############################################################
+# FishEye
+
+fisheye: 1
+
+matrix_D: "matrix_d.npy"
+matrix_K: "matrix_k.npy"
+array_DIM: "array_dim.npy"
+
+
+###############################################################
+# Perspective
 matrix: 1
 # 1 to load from file
 
