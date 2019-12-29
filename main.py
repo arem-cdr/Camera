@@ -38,7 +38,13 @@ def main():
     # Loading correction matrix from files
     if(fish == 1):
         # Generating FishEye remover object
-        fishremover = FRemover()
+        Dp= raw['matrix_D']
+        Kp = raw['matrix_K']
+        Ap = raw['array_DIM']
+        K = np.load(raw[Kp])
+        D = np.load(raw[Dp])
+        DIM = np.load(raw[Ap])
+        fishremover = FRemover(0, K, D, DIM, dim2=None, dim3=None)
        
     # Generating Calibration object
     calibobj = Calib(tl,tr,dr,dl,sizeXmm,sizeYmm)
