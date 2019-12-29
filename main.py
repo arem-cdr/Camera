@@ -33,7 +33,7 @@ def main():
     tr = raw['idtr']
     dr = raw['iddr']
     dl = raw['iddl']
-    
+    fish = raw['fisheye']
     
     # Loading correction matrix from files
     if(fish == 1):
@@ -41,10 +41,10 @@ def main():
         Dp= raw['matrix_D']
         Kp = raw['matrix_K']
         Ap = raw['array_DIM']
-        K = np.load(raw[Kp])
-        D = np.load(raw[Dp])
-        DIM = np.load(raw[Ap])
-        fishremover = FRemover(0, K, D, DIM, dim2=None, dim3=None)
+        K = np.load(Kp)
+        D = np.load(Dp)
+        DIM = np.load(Ap)
+        fishremover = FRemover(0, K, D, DIM)
        
     # Generating Calibration object
     calibobj = Calib(tl,tr,dr,dl,sizeXmm,sizeYmm)

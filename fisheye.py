@@ -6,6 +6,7 @@ import os
 
 class FRemover(object):
     def  __init__(self,balance, K, D, DIM, dim2=None, dim3=None):
+        self.balance = balance
         self.K = K
         self.D = D
         self.DIM = DIM
