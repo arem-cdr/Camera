@@ -4,7 +4,7 @@ import cv2
 import time
 from cv2 import aruco
 import math  
-import yaml 
+
 
 # Imports from our project
 from calibrator import *
@@ -13,44 +13,29 @@ from gextractor import *
 from gextractorNG import *
 from dextractor import *
 from fisheye import *
-
+from settings import *
 # Here we build the code that calls other scripts to do all the work
 
 def main():
     # Opening data stream
     cap = cv2.VideoCapture("raw/video9.h254")
-    sizex =1
-    sizey =1
+    sizex = 1
+    sizey = 1
     # Loading data from config.yml
-    raw = ""
-    with open("config.yml", 'r') as ymlfile:
-        raw = yaml.load(ymlfile)
+    conf = Config()
+    conf.load("config.yml")
     calculated = False
-    sizeXmm = raw['sizeXmm']
-    sizeYmm = raw['sizeYmm']
-    matrix = raw['matrix']
-    tl = raw['idtl']
-    tr = raw['idtr']
-    dr = raw['iddr']
-    dl = raw['iddl']
-    fish = raw['fisheye']
-    
+
     # Loading correction matrix from files
-    if(fish == 1):
+    if(conf.fish == 1):
         # Generating FishEye remover object
-        Dp= raw['matrix_D']
-        Kp = raw['matrix_K']
-        Ap = raw['array_DIM']
-        K = np.load(Kp)
-        D = np.load(Dp)
-        DIM = np.load(Ap)
-        fishremover = FRemover(0, K, D, DIM)
+        fishremover = FRemover(0, conf.K, conf.D, conf.DIM)
        
     # Generating Calibration object
-    calibobj = Calib(tl,tr,dr,dl,sizeXmm,sizeYmm)
+    calibobj = Calib(conf.tl,conf.tr,conf.dr,conf.dl,conf.sizeXmm,conf.sizeYmm)
     # Loading perspective correction matrix from file if exits
-    if(matrix ==1):
-        calibobj.M = np.load(raw['matrix_file'])
+    if(conf.matrix == 1):
+        calibobj.M = conf.M
         i = 40
         calculated = True
     # Generating data object (to stock collected data)
@@ -81,7 +66,7 @@ def main():
         #aruco = track.draw(resized)
         #gex.debug(resized,"test","test1")
         # Initializing gextractor
-        if(i==0):
+        if(i == 0):
             gex = NGExtractors(resized) 
         gex.draw(resized)
         #####################################################################
