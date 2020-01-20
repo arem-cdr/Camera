@@ -1,9 +1,23 @@
+"""
+The Calibrator Module has for goal to get a bird point of view of
+a planar surface delimited by 4 Aruco.
+
+Usage
+-----
+Load a Calib Object with 4 ARUCO ID, and the dimension of the rectangle
+formed by them in the real life.
+Then you need to apply genCalibration() to the object with an image, 
+it will try to detect the ARUCO's in the image and will generate
+matricies representing the necessary transformation to go from the 
+camera plan to the aruco plan.
+Then to get the bird point of view, use applyCalibration() with an image and
+it will return you an image corresponding to the bird point of view.
+
+"""
 
 import cv2
 from cv2 import aruco
 import numpy as np
-
-
 
 
 
