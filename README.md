@@ -1,44 +1,51 @@
 # :video_camera: Caméra
 
 
-**Merci de DL le zip. Des vidéos pour tester les algos sont incluses**
-
 ------------------------------------------------------------------------------------------
-**Scripts qui marchent:**
+**List of modules:**
 
-- simple.py (détecte les polygônes à l'image et affiche leur position)
-- distance.py (détecte les deux aruco à l'image et calcule la distance entre eux, la distance est exprimée en pixel)
+- Calibrator.py
 
-**Scripts en cours de dev:**
+  Load a Calib Object with 4 ARUCO ID, and the dimension of the rectangle
+  formed by them in the real life.
+  Then you need to apply genCalibration() to the object with an image, 
+  it will try to detect the ARUCO's in the image and will generate
+  matricies representing the necessary transformation to go from the 
+  camera plan to the aruco plan.
+  Then to get the bird point of view, use applyCalibration() with an image and
+  it will return you an image corresponding to the bird point of view.
 
-- perspectivefix.py (cherche à corriger la perspective d'une caméra en utilisant une calibration initiale à l'aide de 4 aruco)
 
-  - [x] Regarder à https://answers.opencv.org/question/136796/turning-aruco-marker-in-parallel-with-camera-plane/
-  - [x] Recup correctement les coins du rectangle formé par les 4 aruco
-  - [x] Effectuer la correction avec les fonctions getPerspectiveTransform() & warpPerspective()
-
-
-- gobleperspective.py (cherche à extraire les goblets de l'image)
-
-  - [ ] Extraire les goblels du fond grâce aux couleurs
-  - [ ] Extraire le centre de chaque goblet grâce à leur base
-  - [ ] Déterminer si le goblet est allongé
+- fisheye.py 
+  
+  Uses matricies calculated by fisheye_calculator.py to fix distortion
   
   
- - robotperspective.py (cherche à extraire les robots)
+- gextractor.py 
+  
+  Uses a succession of filters and image processing technics to extract the objects. 
+  Please use the debug function to tweak the parameters of the extractor.
+  
+  
+ - gextractorNG.py
  
-**Scripts pas encore dev**
+  Uses a background difference method to extract objects. Takes the background img when initialized.
+  
+ ------------------------------------------------------------------------------------------ 
+ **Other scripts :**
+ 
+  - test_camera.py
 
-- combine_deux_camera.py
-- goblet.py
-- goblet_allongé.py
-- girouette.py
-
-**Script poubelle:**
-
-- main_old.py
+    Small module to test if opencv and the camera are working.
+  
+  
 ------------------------------------------------------------------------------------------
-**:trophy: But** 
+**:hammer: Building** 
+
+  You only have to edit TEMP ZONES in main.py to interact with the tool.
+
+------------------------------------------------------------------------------------------
+**:trophy: Goal** 
 
 - extraire la position de nos robots
 - extraire la position des robots ennemis
