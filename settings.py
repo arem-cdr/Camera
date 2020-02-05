@@ -19,7 +19,9 @@ class Config(object):
         self.dr = raw['iddr']
         self.dl = raw['iddl']
         self.fish = raw['fisheye']
-        self.K = np.load(raw['matrix_K'])
-        self.D = np.load(raw['matrix_D'])
-        self.DIM = np.load(raw['array_DIM'])
-        self.M = np.load(raw['matrix_file'])
+        if(self.fish):
+            self.K = np.load(raw['matrix_K'])
+            self.D = np.load(raw['matrix_D'])
+            self.DIM = np.load(raw['array_DIM'])
+        if(self.matrix):
+            self.M = np.load(raw['matrix_file'])
