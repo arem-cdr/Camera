@@ -22,7 +22,7 @@ import numpy as np
 
 
 class Calib(object):
-    def  __init__(self,toplid,toprid,lowrid,lowlid,sizeXmm,sizeYmm):
+    def  __init__(self,toplid,toprid,lowrid,lowlid,sizeXmm,sizeYmm,load,calibfile):
         self.rect = [[0,0],[0,0],[0,0],[0,0]]
         self.toplid = toplid
         self.toprid = toprid
@@ -30,6 +30,8 @@ class Calib(object):
         self.lowlid = lowlid
         self.maxWidth = sizeXmm
         self.maxHeight = sizeYmm
+        self.calib_file = calibfile
+        self.load = load
 
     def genCalibration(self, img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -46,7 +48,7 @@ class Calib(object):
         corrected = cv2.warpPerspective(img, self.M, (self.maxWidth,self.maxHeight))
         return corrected
     def saveMat(self):
-        np.save('calib_matrix.npy',self.M)
+        np.save(self.calib_file,self.M)
 
 
 def four_point_transform(rect,maxHeight,maxWidth):

@@ -27,7 +27,7 @@ class NGExtractors(object):
         thresh = cv2.threshold(difference, 45, 255, cv2.THRESH_BINARY)[1]
         thresh = cv2.dilate(thresh, None, iterations=2)
         res = cv2.bitwise_and(img,img, mask= thresh)
-        cv2.imshow('mask', res)
+        cv2.imshow('bitwise mask', res)
         cnts = cv2.findContours(thresh.copy(),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
         cnts = imutils.grab_contours(cnts)
         # loop over the contours individually
@@ -41,7 +41,7 @@ class NGExtractors(object):
             box = np.array(box, dtype="int")
             cv2.drawContours(res, [box.astype("int")], -1, (0, 255, 0), 2)
         #cv2.drawContours(res, cnts, -1, (255,0,0), 3)
-        cv2.imshow('filtered + track', res)
+        cv2.imshow('mask + track', res)
     
     def get(self,img):
         pass
