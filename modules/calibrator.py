@@ -33,7 +33,7 @@ class Calib(object):
         self.calib_file = calibfile
         self.load = load
 
-    def genCalibration(self, img):
+    def genCalibrationAruco(self, img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         aruco_dict = aruco.Dictionary_get(aruco.DICT_ARUCO_ORIGINAL)
         parameters =  aruco.DetectorParameters_create()
