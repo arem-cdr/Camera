@@ -7,13 +7,13 @@ import math
 
 
 # Imports from our project
-from calibrator import *
-from track import *
-from gextractor import *
-from gextractorNG import *
-from dextractor import *
-from fisheye import *
-from settings import *
+from modules.calibrator import *
+from modules.track import *
+from modules.gextractor import *
+from modules.gextractorNG import *
+from modules.dextractor import *
+from modules.fisheye import *
+from modules.settings import *
 
 
 # Here we build the code that calls other scripts to do all the work
