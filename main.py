@@ -53,7 +53,7 @@ def main():
             resized = fishremover.removefish(resized)
             # Applying perspective correction matrix to frame
         warped = calibobj.applyCalibration(resized)
-        warped = cv2.resize(warped, (0, 0), fx=1/4,fy=1/4)
+        #warped = cv2.resize(warped, (0, 0), fx=1/4,fy=1/4)
         #cv2.imshow('bird eye', warped)
         if(i == 0):
             gex = NGExtractors(warped) 
@@ -64,7 +64,8 @@ def main():
         data.showTrails(res,3)
         data.showPos(res,conf)
         com.send_Point_list(data.red_gobelet)
-
+        
+        res = cv2.resize(res, (0, 0), fx=1/4,fy=1/4)
         cv2.imshow('mask + track', res)
        
         i += 1
