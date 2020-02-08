@@ -14,6 +14,7 @@ from modules.gextractorNG import *
 from modules.dextractor import *
 from modules.fisheye import *
 from modules.settings import *
+from modules.network import *
 
 
 # Here we build the code that calls other scripts to do all the work
@@ -25,6 +26,8 @@ def main():
     # Loading data from config.yml
     conf = Config()
     conf.load("config.yml")
+
+    com = Com()
 
     if(conf.fish == 1):
         # Generating FishEye remover object
@@ -55,7 +58,7 @@ def main():
         if(i == 0):
             gex = NGExtractors(warped) 
         res =gex.draw(warped,data)
-     
+        com.send_Point_list(data.fallen_goblet)
         for j in range(len(data.fallen_goblet)):
             
             if( (time.time() - data.fallen_goblet[j].t)>3):
