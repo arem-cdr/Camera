@@ -44,7 +44,8 @@ class NGExtractors(object):
             cY = np.average(box[:, 1]) 
             data.fallen_goblet.append(Point(cX,cY))
         #cv2.drawContours(res, cnts, -1, (255,0,0), 3)
-        cv2.imshow('mask + track', res)
+        #cv2.imshow('mask + track', res)
+        return res
     
     def get(self,img):
         pass

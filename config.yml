@@ -18,8 +18,8 @@ array_DIM: "calib_data/array_dim.npy"
 matrix: 1
 # 1 to load from file
 
-sizeXmm: 490
-sizeYmm: 580
+sizeXmm: 2150
+sizeYmm: 2000
 # Always needed 
 
 idtl: 13

@@ -60,11 +60,16 @@ def main():
         res =gex.draw(warped,data)
         com.send_Point_list(data.fallen_goblet)
         for j in range(len(data.fallen_goblet)):
-            
             if( (time.time() - data.fallen_goblet[j].t)>3):
-                data.fallen_goblet.pop(j)
+                continue
             else:
-                center = (int(data.fallen_goblet[j].x), int(data.fallen_goblet[j].y))
+                cx = int(data.fallen_goblet[j].x)
+                cy = int(data.fallen_goblet[j].y)
+                center = (cx,cy)
+                (x, y, w, h) = cv2.getWindowImageRect('mask + track')
+                x= int(cx/w * conf.sizeXmm)
+                y= int(cy/h * conf.sizeYmm)
+                cv2.putText(res, "x:{}, y:{}".format(x,y), (cx,cy-20),cv2.FONT_HERSHEY_SIMPLEX, 0.55, (240, 0, 159), 2)
                 cv2.circle(res, center, 2, (0, 0, 255),2)
         cv2.imshow('mask + track', res)
        
