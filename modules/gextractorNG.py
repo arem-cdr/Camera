@@ -3,8 +3,9 @@ import cv2
 from cv2 import aruco
 import numpy as np
 import imutils
-
+from modules.dextractor import *
 from imutils import contours
+
 
 
 
@@ -17,6 +18,9 @@ class NGExtractors(object):
     
 
     def draw(self,img,data):
+        """
+            Input BGR img
+        """
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (21, 21), 0)
 
@@ -32,9 +36,7 @@ class NGExtractors(object):
         cnts = imutils.grab_contours(cnts)
         # loop over the contours individually
         for c in cnts:
-            if(cv2.contourArea(c) <3000):
-                continue
-            if(cv2.contourArea(c) >8000):
+            if(cv2.contourArea(c) <150):
                 continue
             box = cv2.minAreaRect(c)
             box = cv2.boxPoints(box) 
@@ -42,7 +44,14 @@ class NGExtractors(object):
             cv2.drawContours(res, [box.astype("int")], -1, (0, 255, 0), 2)
             cX = np.average(box[:, 0])
             cY = np.average(box[:, 1]) 
-            data.fallen_goblet.append(Point(cX,cY))
+
+            colors = int(img[int(cY),int(cX)])
+            color = colors[1]>colors[2]
+            robot = 0
+            robot_area = 500
+            if(cv2.contourArea(c)>robot_area):
+                robot = 1
+            data.log(Point(cX,cY),color,robot)
         #cv2.drawContours(res, cnts, -1, (255,0,0), 3)
         #cv2.imshow('mask + track', res)
         return res

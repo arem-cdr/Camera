@@ -38,7 +38,7 @@ def main():
         calibobj = Calib(conf.tl,conf.tr,conf.dr,conf.dl,conf.sizeXmm,conf.sizeYmm,conf.matrix,conf.calibfile)
         calibobj.M = conf.M
     # Generating data object (to stock collected data)
-    data = DataExtractor()
+    data = DataExtractor(1)
    
     i = 0
     while(cap.isOpened()):
@@ -57,20 +57,14 @@ def main():
         #cv2.imshow('bird eye', warped)
         if(i == 0):
             gex = NGExtractors(warped) 
-        res =gex.draw(warped,data)
-        com.send_Point_list(data.fallen_goblet)
-        for j in range(len(data.fallen_goblet)):
-            if( (time.time() - data.fallen_goblet[j].t)>3):
-                continue
-            else:
-                cx = int(data.fallen_goblet[j].x)
-                cy = int(data.fallen_goblet[j].y)
-                center = (cx,cy)
-                (x, y, w, h) = cv2.getWindowImageRect('mask + track')
-                x= int(cx/w * conf.sizeXmm)
-                y= int(cy/h * conf.sizeYmm)
-                cv2.putText(res, "x:{}, y:{}".format(x,y), (cx,cy-20),cv2.FONT_HERSHEY_SIMPLEX, 0.55, (240, 0, 159), 2)
-                cv2.circle(res, center, 2, (0, 0, 255),2)
+
+        data.clear()
+        # Get Data
+        res = gex.draw(warped,data)
+        data.showTrails(res,3)
+        data.showPos(res,conf)
+        com.send_Point_list(data.red_gobelet)
+
         cv2.imshow('mask + track', res)
        
         i += 1
