@@ -19,7 +19,7 @@ from modules.settings import *
 # Here we build the code that calls other scripts to do all the work
 def main():
     # Opening data stream
-    cap = cv2.VideoCapture("raw/video11.h254")
+    cap = cv2.VideoCapture(0)
     sizex = 1
     sizey = 1
     # Loading data from config.yml
@@ -28,7 +28,7 @@ def main():
 
     if(conf.fish == 1):
         # Generating FishEye remover object
-        fishremover = FRemover(0, conf.K, conf.D, conf.DIM)
+        fishremover = FRemover(1, conf.K, conf.D, conf.DIM)
        
     # Loading perspective correction matrix from file if exits
     if(conf.matrix == 1):
@@ -43,7 +43,7 @@ def main():
         if(frame is None):
             break
         resized = cv2.resize(frame, (0, 0), fx=sizex,fy=sizey)
-        cv2.imshow('real', resized)
+        #cv2.imshow('real', resized)
 
          # Removing fisheye
         if(conf.fish == 1):
@@ -51,13 +51,22 @@ def main():
             # Applying perspective correction matrix to frame
         warped = calibobj.applyCalibration(resized)
         warped = cv2.resize(warped, (0, 0), fx=1/4,fy=1/4)
-        cv2.imshow('bird eye', warped)
+        #cv2.imshow('bird eye', warped)
         if(i == 0):
             gex = NGExtractors(warped) 
-        gex.draw(warped)
+        res =gex.draw(warped,data)
+     
+        for j in range(len(data.fallen_goblet)):
+            
+            if( (time.time() - data.fallen_goblet[j].t)>3):
+                data.fallen_goblet.pop(j)
+            else:
+                center = (int(data.fallen_goblet[j].x), int(data.fallen_goblet[j].y))
+                cv2.circle(res, center, 2, (0, 0, 255),2)
+        cv2.imshow('mask + track', res)
        
         i += 1
-        cv2.imshow('real + fish', resized)
+        #cv2.imshow('real + fish', resized)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
         

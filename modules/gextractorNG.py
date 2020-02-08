@@ -16,7 +16,7 @@ class NGExtractors(object):
         self.back = background
     
 
-    def draw(self,img):
+    def draw(self,img,data):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (21, 21), 0)
 
@@ -24,7 +24,7 @@ class NGExtractors(object):
         difference = cv2.absdiff(gray, self.back)
 
         # Apply thresholding to eliminate noise
-        thresh = cv2.threshold(difference, 45, 255, cv2.THRESH_BINARY)[1]
+        thresh = cv2.threshold(difference, 20, 255, cv2.THRESH_BINARY)[1]
         thresh = cv2.dilate(thresh, None, iterations=2)
         res = cv2.bitwise_and(img,img, mask= thresh)
         cv2.imshow('bitwise mask', res)
@@ -40,6 +40,9 @@ class NGExtractors(object):
             box = cv2.boxPoints(box) 
             box = np.array(box, dtype="int")
             cv2.drawContours(res, [box.astype("int")], -1, (0, 255, 0), 2)
+            cX = np.average(box[:, 0])
+            cY = np.average(box[:, 1]) 
+            data.fallen_goblet.append(Point(cX,cY))
         #cv2.drawContours(res, cnts, -1, (255,0,0), 3)
         cv2.imshow('mask + track', res)
     

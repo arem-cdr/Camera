@@ -1,5 +1,5 @@
 
-import datetime
+import time
 
 class DataExtractor(object):
     def  __init__(self):
@@ -15,6 +15,6 @@ class Point(object):
         self.x = x
         self.y = y 
         if(t==None):
-            self.t = datetime.datetime.now()
+            self.t = time.time()
         else:
             self.t = t

@@ -4,8 +4,8 @@ import cv2
 def main():
     # Opening data stream
     cap = cv2.VideoCapture(0)
-    sizex = 1
-    sizey = 1
+    sizex = 1/4
+    sizey = 1/4
     while(cap.isOpened()):
 
         # Reading frame from stream
