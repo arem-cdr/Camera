@@ -45,7 +45,26 @@
 - extraire la position des robots ennemis
 - extraire la position des gobelets
 - extraire la position des gobelets allongés 
+- extraire des informations sur l'état des actions.
 - extraire l'information sur la girouette
+- envoyer les infomations extraite par la Xbee
+
+
+                                           Camera     Xbee
+                                               Raspberry
+                                              _________
+                                                |   |
+                                                |   |
+                                                |   |
+                                                |   |   Système de repérage
+                                                |   |   central
+                                                |   | 
+                                                |   |
+              _______                           |   |
+             |       |                          |   |
+             | Robot |       |--|               |   | 
+             |_______|       |__|               |___|
+
 
 **:bookmark_tabs: plan d'action**
 
