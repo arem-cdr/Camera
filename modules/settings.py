@@ -25,3 +25,5 @@ class Config(object):
             self.DIM = np.load(raw['array_DIM'])
         if(self.matrix):
             self.M = np.load(raw['matrix_file'])
+        self.back = raw['background_file']
+        self.background = raw['sub_file']

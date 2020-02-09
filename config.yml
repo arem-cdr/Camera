@@ -30,4 +30,6 @@ iddl: 14
 matrix_file: "calib_data/calib_matrix.npy"
 # Required for loading and saving calibrator obj
 ###############################################################
-sub_file: "background.png"
+background_file: 0
+
+sub_file: "calib_data/background.png"
