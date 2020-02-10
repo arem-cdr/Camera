@@ -27,3 +27,5 @@ class Config(object):
             self.M = np.load(raw['matrix_file'])
         self.back = raw['background_file']
         self.background = raw['sub_file']
+        self.size_min = raw['size_min']
+        self.size_min_robot = raw['size_min_robot']

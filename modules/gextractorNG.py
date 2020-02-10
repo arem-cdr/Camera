@@ -21,7 +21,7 @@ class NGExtractors(object):
         self.back = background
     
 
-    def extract(self,img,data):
+    def extract(self,img,data,conf):
         """
             Input BGR img
         """
@@ -44,7 +44,7 @@ class NGExtractors(object):
         cnts = imutils.grab_contours(cnts)
         # loop over the contours individually
         for c in cnts:
-            if(cv2.contourArea(c) <150):
+            if(cv2.contourArea(c) <conf.size_min):
                 continue
             box = cv2.minAreaRect(c)
             box = cv2.boxPoints(box) 
@@ -53,10 +53,10 @@ class NGExtractors(object):
             cX = np.average(box[:, 0])
             cY = np.average(box[:, 1]) 
 
-            colors = int(img[int(cY),int(cX)])
+            colors = (img[int(cY),int(cX)])
             color = colors[1]>colors[2]
             robot = 0
-            robot_area = 500
+            robot_area = conf.size_min_robot
             if(cv2.contourArea(c)>robot_area):
                 robot = 1
             data.log(Point(cX,cY),color,robot)

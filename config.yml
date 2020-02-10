@@ -33,3 +33,9 @@ matrix_file: "calib_data/calib_matrix.npy"
 background_file: 0
 
 sub_file: "calib_data/background.png"
+###############################################################
+# Object extractor
+
+size_min: 400
+
+size_min_robot: 4000

@@ -4,7 +4,7 @@ import cv2
 import time
 from cv2 import aruco
 import math  
-
+import cProfile
 
 # Imports from our project
 from modules.calibrator import *
@@ -52,20 +52,21 @@ def main():
         if(conf.fish == 1):
             resized = fishremover.removefish(resized)
             # Applying perspective correction matrix to frame
+      
         warped = calibobj.applyCalibration(resized)
-        #warped = cv2.resize(warped, (0, 0), fx=1/4,fy=1/4)
-        #cv2.imshow('bird eye', warped)
+        warped = cv2.resize(warped, (0, 0), fx=1/4,fy=1/4)
+        
         if(i == 0):
             gex = NGExtractors(conf,warped) 
 
         data.clear()
         # Get Data
-        res = gex.extract(warped,data)
+        res = gex.extract(warped,data,conf)
         data.showTrails(res,3)
         data.showPos(res,conf)
         com.send_Point_list(data.red_gobelet)
         
-        res = cv2.resize(res, (0, 0), fx=1/4,fy=1/4)
+        res = cv2.resize(res, (0, 0), fx=1,fy=1)
         cv2.imshow('mask + track', res)
        
         i += 1

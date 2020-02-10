@@ -17,7 +17,7 @@ class DataExtractor(object):
             robot: 0 == NO ;  1 == YES
         """
         if(self.debug):
-            self.to_trail(dpoint)
+            self.to_trail.append(dpoint)
         if(robot):
             self.robot.append(dpoint)
         else:
@@ -33,7 +33,7 @@ class DataExtractor(object):
         """
         self.red_gobelet = []
         self.green_gobelet = []
-        self.robots = []
+        self.robot = []
 
     def showTrails(self,img,decay_time):
         h = []
@@ -53,8 +53,8 @@ class DataExtractor(object):
                 pos= (px,py)
                 cv2.circle(img, pos, 2, (0, 0, 255),2)
                 h, w, channels = img.shape 
-                x= int(x/w * conf.sizeXmm)
-                y= int(y/h * conf.sizeYmm)
+                x= int(px/w * conf.sizeXmm)
+                y= int(py/h * conf.sizeYmm)
                 cv2.putText(img, "x:{}, y:{}".format(x,y), (px,py-20),cv2.FONT_HERSHEY_SIMPLEX, 0.55, (240, 0, 159), 2)
 
         for j in range(len(self.green_gobelet)):
@@ -63,8 +63,8 @@ class DataExtractor(object):
                 pos= (px,py)
                 cv2.circle(img, pos, 2, (0, 255, 0),2)
                 h, w, channels = img.shape 
-                x= int(x/w * conf.sizeXmm)
-                y= int(y/h * conf.sizeYmm)
+                x= int(px/w * conf.sizeXmm)
+                y= int(py/h * conf.sizeYmm)
                 cv2.putText(img, "x:{}, y:{}".format(x,y), (px,py-20),cv2.FONT_HERSHEY_SIMPLEX, 0.55, (240, 0, 159), 2)
         
         for j in range(len(self.robot)):
@@ -73,8 +73,8 @@ class DataExtractor(object):
                 pos= (px,py)
                 cv2.circle(img, pos, 2, (255, 0, 255),2)
                 h, w, channels = img.shape 
-                x= int(x/w * conf.sizeXmm)
-                y= int(y/h * conf.sizeYmm)
+                x= int(px/w * conf.sizeXmm)
+                y= int(py/h * conf.sizeYmm)
                 cv2.putText(img, "x:{}, y:{}".format(x,y), (px,py-20),cv2.FONT_HERSHEY_SIMPLEX, 0.55, (240, 0, 159), 2)
 
 
