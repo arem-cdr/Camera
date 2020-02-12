@@ -50,16 +50,70 @@ class NGExtractors(object):
             box = cv2.boxPoints(box) 
             box = np.array(box, dtype="int")
             cv2.drawContours(res, [box.astype("int")], -1, (0, 255, 0), 2)
+
+            # Color ?
             cX = np.average(box[:, 0])
             cY = np.average(box[:, 1]) 
-            bas_y = np.max(box[:, 1]) 
             colors = (img[int(cY),int(cX)])
             color = colors[1]>colors[2]
+
+            # Exact center calcul ?
+            k = doubleminBox(box)
+            fmin,smin = k[0],[1]
+            teta = np.arctan2(smin[1]-fmin[1],smin[0]-fmin[0])
+            xmid,ymid = (fmin[0]+smin[0])/2 , (fmin[1]+smin[1])/2
+            proportion = 0.1
+            k = getHW(box)
+            h,w = k[0],k[1]
+            xdelta,ydelta = -np.sin(teta)*proportion*h, np.cos(teta)*proportion*h
+
+            centerx,centery = xmid+xdelta, ymid + ydelta
+
+            # Is robot ?
             robot = 0
             robot_area = conf.size_min_robot
             if(cv2.contourArea(c)>robot_area):
                 robot = 1
-            data.log(Point(cX,bas_y),color,robot)
-        #cv2.drawContours(res, cnts, -1, (255,0,0), 3)
-        #cv2.imshow('mask + track', res)
+
+            # Exporting info
+            data.log(Point(centerx,centery),color,robot)
+      
         return res
+
+
+def dist(p1,p2):
+    return np.sqrt((p2[1]-p1[1])**2 + (p2[0]-p1[0])**2)
+
+def getHW(box):
+    l = []
+    plast = p[0]
+    for p in box:
+        l.append(dist(plast,p))
+        plast = p
+    l.pop()
+    u= [np.max(l),np.min(l)]
+    return u
+
+        
+
+def doubleminBox(box):
+
+    b1 = box[0]
+    b1y = box[0][1]
+    b2 = box[1]
+    b2y = box[1][1]
+    for p in box:
+        if(p[1]<b2y):
+            if(b2y<b1y):
+                b1y = b2y
+                b1 = b2
+            b2y = p[1]
+            b2 = p
+        if(p[1]<b1y):
+            if(b1y<b2y):
+                b2y = b1y
+                b2 = b1
+            b1y = p[1]
+            b1 = p
+    k = [b1,b2]
+    return k
