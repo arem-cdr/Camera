@@ -27,7 +27,7 @@
 - extraire la position des gobelets allongés 
 - extraire des informations sur l'état des actions.
 - extraire l'information sur la girouette
-- envoyer les infomations extraite par la Xbee
+- envoyer les infomations extraites par la Xbee
 
 
 
