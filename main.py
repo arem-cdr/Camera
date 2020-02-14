@@ -35,7 +35,7 @@ def main():
        
     # Loading perspective correction matrix from file if exits
     if(conf.matrix == 1):
-        calibobj = Calib(conf.tl,conf.tr,conf.dr,conf.dl,conf.sizeXmm,conf.sizeYmm,conf.matrix,conf.calibfile)
+        calibobj = Calib(conf.sizeXmm,conf.sizeYmm,conf.matrix,conf.calibfile)
         calibobj.M = conf.M
     # Generating data object (to stock collected data)
     data = DataExtractor(1)

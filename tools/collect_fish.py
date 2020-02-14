@@ -11,11 +11,11 @@ def main():
         # Reading frame from stream
         ret, frame = cap.read()
         if(time.time()-t>3):
-            cv2.circle(frame,(50,50),10,(255,0,0),10)
             if(time.time()-t>4):
                 t = time.time()
                 cv2.imwrite(str(i)+".jpg", frame ) 
                 i+=1
+            cv2.circle(frame,(50,50),10,(255,0,0),10)
             
         cv2.imshow('frame', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):

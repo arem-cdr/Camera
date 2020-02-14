@@ -14,10 +14,6 @@ class Config(object):
         self.sizeYmm = raw['sizeYmm']
         self.matrix = raw['matrix']
         self.calibfile = raw['matrix_file']
-        self.tl = raw['idtl']
-        self.tr = raw['idtr']
-        self.dr = raw['iddr']
-        self.dl = raw['iddl']
         self.fish = raw['fisheye']
         if(self.fish):
             self.K = np.load(raw['matrix_K'])

@@ -1,7 +1,9 @@
-
+#############################################################
+#                 CAMERA-CONFIG FILE
+# 
+##############################################################
 debug: 1 
 # 1 to enable debug
-
 
 ###############################################################
 # FishEye
@@ -12,24 +14,20 @@ matrix_D: "calib_data/matrix_d.npy"
 matrix_K: "calib_data/matrix_k.npy"
 array_DIM: "calib_data/array_dim.npy"
 
-
 ###############################################################
 # Perspective
+
 matrix: 1
 # 1 to load from file
 
 sizeXmm: 2150
 sizeYmm: 2000
-# Always needed 
-
-idtl: 13
-idtr: 11
-iddr: 15
-iddl: 14
 
 matrix_file: "calib_data/calib_matrix.npy"
 # Required for loading and saving calibrator obj
 ###############################################################
+# Background diff
+
 background_file: 0
 
 sub_file: "calib_data/background.png"
@@ -39,3 +37,17 @@ sub_file: "calib_data/background.png"
 size_min: 400
 
 size_min_robot: 4000
+
+#################################################################
+# Points of interest.
+
+point:
+  A:
+    x: 0
+    y: 0
+  B: 
+    x: 100
+    y: 100
+
+
+#################################################################

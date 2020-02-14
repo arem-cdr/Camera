@@ -22,18 +22,17 @@ import numpy as np
 
 
 class Calib(object):
-    def  __init__(self,toplid,toprid,lowrid,lowlid,sizeXmm,sizeYmm,load,calibfile):
+    def  __init__(self,sizeXmm,sizeYmm,load,calibfile):
         self.rect = [[0,0],[0,0],[0,0],[0,0]]
-        self.toplid = toplid
-        self.toprid = toprid
-        self.lowrid = lowrid
-        self.lowlid = lowlid
         self.maxWidth = sizeXmm
         self.maxHeight = sizeYmm
         self.calib_file = calibfile
         self.load = load
 
     def genCalibrationAruco(self, img):
+        """ Please load self.toplid,self.toprid,self.lowrid,self.lowlid before
+        # calling this function.
+        """
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         aruco_dict = aruco.Dictionary_get(aruco.DICT_ARUCO_ORIGINAL)
         parameters =  aruco.DetectorParameters_create()
