@@ -9,7 +9,7 @@ class Config(object):
     def load(self,path):
         raw = ""
         with open(path, 'r') as ymlfile:
-            raw = yaml.load(ymlfile)
+            raw = yaml.load(ymlfile,Loader=yaml.FullLoader)
         self.sizeXmm = raw['sizeXmm']
         self.sizeYmm = raw['sizeYmm']
         self.matrix = raw['matrix']
