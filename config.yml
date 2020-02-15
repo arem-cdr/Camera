@@ -31,6 +31,8 @@ matrix_file: "calib_data/calib_matrix.npy"
 #################################################################
 # Background diff
 #################################################################
+threshold: 30
+
 enable_background_diff_from_file: 0
 
 sub_file: "calib_data/background.png"

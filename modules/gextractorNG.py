@@ -31,7 +31,7 @@ class NGExtractors(object):
         difference = cv2.absdiff(gray, self.back)
 
         # Apply thresholding to eliminate noise
-        thresh = cv2.threshold(difference, 30, 255, cv2.THRESH_BINARY)[1]
+        thresh = cv2.threshold(difference, conf.threshold, 255, cv2.THRESH_BINARY)[1]
         thresh = cv2.dilate(thresh, None, iterations=2)
         res = cv2.bitwise_and(img,img, mask= thresh)
 
