@@ -2,46 +2,50 @@
 #                 CAMERA-CONFIG FILE
 # 
 ##############################################################
-debug: 1 
+enable_debug: 1 
 # 1 to enable debug
 
-###############################################################
+#################################################################
 # FishEye
-
-fisheye: 1
+#################################################################
+enable_fisheye: 1
 
 matrix_D: "calib_data/matrix_d.npy"
 matrix_K: "calib_data/matrix_k.npy"
 array_DIM: "calib_data/array_dim.npy"
 
-###############################################################
+#################################################################
 # Perspective
+#################################################################
+enable_perpective_correction: 1
 
-matrix: 1
-# 1 to load from file
-
+# |------> x
+# |
+# |
+# |y
 sizeXmm: 2150
 sizeYmm: 2000
 
 matrix_file: "calib_data/calib_matrix.npy"
-# Required for loading and saving calibrator obj
-###############################################################
-# Background diff
 
-background_file: 0
+#################################################################
+# Background diff
+#################################################################
+enable_background_diff_from_file: 0
 
 sub_file: "calib_data/background.png"
-###############################################################
+
+#################################################################
 # Object extractor
+#################################################################
+noise_size: 400
 
-size_min: 400
-
-size_min_robot: 4000
+min_robot_size: 4000
 
 #################################################################
 # Points of interest.
-
-point:
+#################################################################
+points:
   A:
     x: 0
     y: 0
@@ -49,5 +53,19 @@ point:
     x: 100
     y: 100
 
-
 #################################################################
+#
+#   EXPERTS ONLY
+# 
+#################################################################
+#
+# WORKFLOW RESIZE
+#
+img_resize_default: 1
+
+img_resize_after_fish: 1
+
+img_resize_after_perpective: 1
+
+img_resize_display: 1/4
+
