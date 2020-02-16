@@ -11,10 +11,12 @@ class Config(object):
         with open(path, 'r') as ymlfile:
             raw = yaml.load(ymlfile,Loader=yaml.FullLoader)
         self.debug = raw['enable_debug']
-       
+        self.fps = raw['enable_fps']
+
         self.matrix = raw['enable_perpective_correction']
         self.sizeXmm = raw['sizeXmm']
         self.sizeYmm = raw['sizeYmm']
+        self.reduction = int(raw['reduction'])
         self.calibfile = raw['matrix_file']
         if(self.matrix):
             self.M = np.load(raw['matrix_file'])
@@ -31,8 +33,9 @@ class Config(object):
         self.background = raw['sub_file']
         self.size_min = raw['noise_size']
         self.size_min_robot = raw['min_robot_size']
+        self.obj_center_ratio = float(raw['obj_center_ratio'])
 
-        self.img_resize_default = raw['img_resize_default']
-        self.img_resize_after_fish = raw['resize_after_fish']
-        self.img_resize_after_perpective = raw['img_resize_after_perpective']
-        self.img_resize_display = raw['img_resize_display']
+        self.img_resize_default = float(raw['img_resize_default'])
+        self.img_resize_after_fish = float(raw['img_resize_after_fish'])
+        self.img_resize_after_perpective = float(raw['img_resize_after_perpective'])
+        self.img_resize_display = float(raw['img_resize_display'])

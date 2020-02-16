@@ -31,13 +31,14 @@ def main():
        
     # Loading perspective correction matrix from file if exits
     if(conf.matrix == 1):
-        calibobj = Calib(conf.sizeXmm,conf.sizeYmm,conf.matrix,conf.calibfile)
+        calibobj = Calib(conf.sizeXmm//conf.reduction,conf.sizeYmm//conf.reduction,conf.matrix,conf.calibfile)
         calibobj.M = conf.M
 
     # Generating data object (to stock collected data)
     data = DataExtractor(1)
    
     i = 0
+    j = 1
     while(cap.isOpened()):
         ret, img = cap.read()
         if(img is None):
@@ -71,8 +72,16 @@ def main():
             data.showPos(img,conf)
             img_result = cv2.resize(img, (0, 0), fx=conf.img_resize_display,fy=conf.img_resize_display)
             cv2.imshow('mask + track', img_result)
-       
+
+        # FPS
+        if(conf.fps):
+            if(time.time()-t>1): 
+                t = time.time()
+                print("[INFO] {} FPS".format(j))
+                j = 1
+
         i += 1
+        j += 1
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
         

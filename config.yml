@@ -3,8 +3,7 @@
 # 
 ##############################################################
 enable_debug: 1 
-# 1 to enable debug
-
+enable_fps: 1
 #################################################################
 # FishEye
 #################################################################
@@ -26,6 +25,8 @@ enable_perpective_correction: 1
 sizeXmm: 2150
 sizeYmm: 2000
 
+reduction: 4
+
 matrix_file: "calib_data/calib_matrix.npy"
 
 #################################################################
@@ -43,6 +44,9 @@ sub_file: "calib_data/background.png"
 noise_size: 400
 
 min_robot_size: 4000
+
+# Between 0 and 1
+obj_center_ratio: 0.11
 
 #################################################################
 # Points of interest.
@@ -69,5 +73,5 @@ img_resize_after_fish: 1
 
 img_resize_after_perpective: 1
 
-img_resize_display: 1/4
+img_resize_display: 1
 

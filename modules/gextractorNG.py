@@ -63,7 +63,7 @@ class NGExtractors(object):
             teta = np.arctan2(smin[1]-fmin[1],smin[0]-fmin[0])
             xmid = (fmin[0]+smin[0])/2 
             ymid = (fmin[1]+smin[1])/2
-            proportion = 0.1
+            proportion = conf.obj_center_ratio
             k = getHW(box)
             h = k[0]
             w = k[1]

@@ -34,7 +34,7 @@ while True:
         break
 
 if len(refPt) == 4 :
-    M,maxHeight,maxWidth = four_point_transform(refPt,conf.sizeYmm ,conf.sizeXmm )
+    M,maxHeight,maxWidth = four_point_transform(refPt,conf.sizeYmm//conf.reduction ,conf.sizeXmm//conf.reduction)
     np.save("calib_data/calib_matrix.npy",M)
     print("Saved to calib_data/calib_matrix.npy")
 
