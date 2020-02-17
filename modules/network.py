@@ -9,9 +9,9 @@ class Com(object):
     def send(self,msg):
         self.ser.write(str.encode(msg))
     def send_Point_list(self,l,obj_type):
-        k = "-101 "+obj_type+" "
+        k = "-101 "
         for i in l:
-            k += self.formatPoint(i)
+            k += str(obj_type)+" "+self.formatPoint(i)
         k += "-1"
         self.send(k)
     def formatPoint(self,p):
