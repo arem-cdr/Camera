@@ -74,6 +74,25 @@
   - test_camera.py
 
     Small module to test if opencv and the camera are working.
+    
+    
+------------------------------------------------------------------------------------------
+
+
+
+
+
+| Catégorie| Valeur | Informations transmises | Fin de séquence |
+|----------|--------|-------------------------|-----------------|
+| Objet | -101 | Obstacles perçu  | -1 |
+| Objet | 1 | Gobelet vert | -1 |
+| Objet | 2 | Gobelet rouge | -1 |
+| Objet | 3 | Robot | -1 |
+
+Exemple valide:
+
+-101 1 X1 Y1 2 X2 Y2 1 X3 Y3 -1
+
   
   
 

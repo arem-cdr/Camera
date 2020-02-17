@@ -18,7 +18,7 @@ from modules.network import *
 def main():
     # Opening data stream
     cap = cv2.VideoCapture(0)
-
+    
     # Loading data from config.yml
     conf = Config()
     conf.load("config.yml")
@@ -39,6 +39,7 @@ def main():
    
     i = 0
     j = 1
+    t = time.time()
     while(cap.isOpened()):
         ret, img = cap.read()
         if(img is None):
@@ -64,7 +65,7 @@ def main():
         data.clear()
         # Get Data
         img_result = gex.extract(img,data,conf)
-        com.send_Point_list(data.red_gobelet)
+        com.send_Point_list(data.green_gobelet,1)
         
         # Debug
         if(conf.debug):
