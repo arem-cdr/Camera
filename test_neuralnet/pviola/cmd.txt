@@ -1,8 +1,0 @@
-Commands:
-
-
-opencv_createsample
-
-opencv_traincascade
-
-opencv_visualisation

@@ -1,0 +1,6 @@
+###########################################
+# Config files to be loaded
+###########################################
+
+conf_Yellow: "configs/configYellow.yml"
+conf_Blue: "configs/configBlue.yml"
