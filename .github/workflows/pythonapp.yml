@@ -5,7 +5,7 @@ on: [push]
 jobs:
   build:
 
-    runs-on: linux
+    runs-on: ARM32 
 
     steps:
     - uses: actions/checkout@v2
