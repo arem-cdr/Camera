@@ -6,7 +6,7 @@ from modules.settings import *
 
 refPt = []
 conf = Config()
-conf.load("config.yml")
+conf.load("configs/configYellow.yml")
 
 def click_and_crop(event, x, y, flags, param):
     global refPt
