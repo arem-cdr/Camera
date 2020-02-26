@@ -48,12 +48,11 @@ def main():
     # Generating data object (to stock collected data)
     data = DataExtractor(1)
     
-    
-
     i = 0
     changedConf = 0
     j = 1
     t = time.time()
+
     while(cap.isOpened()):
         ret, img = cap.read()
         if(img is None):

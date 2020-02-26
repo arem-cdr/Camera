@@ -83,5 +83,5 @@ class Point(object):
         else:
             self.t = t
     def toReal(self,conf):
-        self.rx = 3000-int(self.x/self.img_shape_w * conf.sizeXmm)
-        self.ry = 2000-int(self.y/self.img_shape_h * conf.sizeYmm)
+        self.rx = conf.zeroxloc-int(self.x/self.img_shape_w * conf.sizeXmm)
+        self.ry = conf.zeroyloc-int(self.y/self.img_shape_h * conf.sizeYmm)

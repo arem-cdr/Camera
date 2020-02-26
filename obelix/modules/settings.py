@@ -16,6 +16,8 @@ class Config(object):
         self.matrix = raw['enable_perpective_correction']
         self.sizeXmm = raw['sizeXmm']
         self.sizeYmm = raw['sizeYmm']
+        self.zeroxloc = raw['zeroxloc']
+        self.zeroyloc = raw['zeroyloc']
         self.reduction = int(raw['reduction'])
         self.calibfile = raw['matrix_file']
         if(self.matrix):
