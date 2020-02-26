@@ -78,7 +78,7 @@
     
 ------------------------------------------------------------------------------------------
 
-
+ **Communication :**
 
 
 
@@ -93,7 +93,17 @@ Exemple valide:
 
 -101 1 X1 Y1 2 X2 Y2 1 X3 Y3 -1
 
-  
+------------------------------------------------------------------------------------------
+
+ **GPIO :**
+
+ | Numéro | Name | Description
+|----------|-------------|----------------------------------------------|
+| 15 | Switch| Passer d'un mode à l'autre |
+| 23 | FPS rate  | Vérifier la vitesse d'execution du workflow |
+| 18 | Diode Jaune | Active lorsque config en mode jaune |
+| 14 | Diode Bleue | Active lorsque config en mode bleu |
+
   
 
 

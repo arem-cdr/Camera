@@ -15,7 +15,7 @@ from modules.network import *
 from modules.gpiomanager import *
 
 # Here we build the code that calls other scripts to do all the work
-def main(conf_file):
+def main():
     # Opening data stream
     cap = cv2.VideoCapture(0)
 
