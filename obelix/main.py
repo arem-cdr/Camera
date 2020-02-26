@@ -18,8 +18,19 @@ from modules.gpiomanager import *
 def main(conf_file):
     # Opening data stream
     cap = cv2.VideoCapture(0)
+
+    # Initializing GPIO
+    gpioM = GpioManager()
+
+    # Base config load
+    bc = BaseConfig()
+    bc.load("config.yml")
+    if(gpioM.led):
+        conf_file = bc.confBlue
+    else:
+        conf_file = bc.confYellow
     
-    # Loading data from config.yml
+    # Loading data from specific config.yml
     conf = Config()
     conf.load(conf_file)
 
@@ -37,8 +48,7 @@ def main(conf_file):
     # Generating data object (to stock collected data)
     data = DataExtractor(1)
     
-    # Initializing GPIO
-    gpioM = GpioManager()
+    
 
     i = 0
     changedConf = 0
@@ -69,7 +79,9 @@ def main(conf_file):
         data.clear()
         # Get Data
         img_result = gex.extract(img,data,conf)
-        com.send_Point_list(data.green_gobelet,1)
+        com.send_Point_list(data.green_gobelet,1,conf)
+        com.send_Point_list(data.red_gobelet,2,conf)
+        com.send_Point_list(data.robot,3,conf)
         
         # Debug
         if(conf.debug):
@@ -100,14 +112,7 @@ def main(conf_file):
 
     # Switching procedure
     if(changedConf):
-        bc = BaseConfig()
-        bc.load("config.yml")
-        if(bc.confYellow == conf_file):
-            main(bc.confBlue)
-        else:
-            main(bc.confYellow)
+        main()
 
 
-bc = BaseConfig()
-bc.load("config.yml")
-main(bc.confYellow)
+main()

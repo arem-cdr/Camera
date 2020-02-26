@@ -11,6 +11,7 @@ class GpioManager(object):
         GPIO.setup(23,GPIO.OUT)
         GPIO.setup(18,GPIO.OUT)
         GPIO.setup(14,GPIO.OUT)
+        self.led = GPIO.input(15)
     def update(self):
         if(GPIO.input(15) != self.led):
             if(self.led):
@@ -20,9 +21,11 @@ class GpioManager(object):
                 GPIO.output(18,GPIO.LOW)
                 GPIO.output(14,GPIO.HIGH)
             self.led = GPIO.input(15)
+            return 1
         if(self.blink):
             GPIO.output(23,GPIO.LOW)
             self.blink = 0
         else:
             GPIO.output(23,GPIO.HIGH)
             self.blink = 1
+        return 0

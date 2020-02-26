@@ -8,11 +8,12 @@ class Com(object):
         self.ser = serial.Serial(SERIALPORT)
     def send(self,msg):
         self.ser.write(str.encode(msg))
-    def send_Point_list(self,l,obj_type):
+    def send_Point_list(self,l,obj_type,conf):
         k = "-101 "
         for i in l:
-            k += str(obj_type)+" "+self.formatPoint(i)
-        k += "-1"
+            k += str(obj_type)+" "+self.formatPoint(i,conf)
+        k += "-1 \n"
         self.send(k)
-    def formatPoint(self,p):
-        return str(int(p.x))+" "+str(int(p.y)) +" "
+    def formatPoint(self,p,conf):
+        p.toReal(conf)
+        return str(int(p.rx))+" "+str(int(p.ry)) +" "

@@ -83,7 +83,8 @@ class NGExtractors(object):
                 robot = 1
 
             # Exporting info
-            data.log(Point(centerx,centery),color,robot)
+            h, w, channels = img.shape 
+            data.log(Point(centerx,centery,h,w),color,robot)
       
         return res
 

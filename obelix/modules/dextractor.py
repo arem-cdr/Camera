@@ -48,41 +48,40 @@ class DataExtractor(object):
 
     def showPos(self,img,conf):
         for j in range(len(self.red_gobelet)):
-                px = int(self.red_gobelet[j].x)
-                py = int(self.red_gobelet[j].y)
-                pos= (px,py)
-                cv2.circle(img, pos, 2, (0, 0, 255),2)
-                h, w, channels = img.shape 
-                x= int(px/w * conf.sizeXmm)
-                y= int(py/h * conf.sizeYmm)
-                cv2.putText(img, "x:{}, y:{}".format(x,y), (px,py-20),cv2.FONT_HERSHEY_SIMPLEX, 0.55, (240, 0, 159), 2)
+                point = self.red_gobelet[j]
+                px = int(point.x)
+                py = int(point.y)
+                cv2.circle(img, (px,py), 2, (0, 0, 255),2)
+                point.toReal(conf)
+                cv2.putText(img, "x:{}, y:{}".format(point.rx,point.ry), (px,py-20),cv2.FONT_HERSHEY_SIMPLEX, 0.55, (240, 0, 159), 2)
 
         for j in range(len(self.green_gobelet)):
-                px = int(self.green_gobelet[j].x)
-                py = int(self.green_gobelet[j].y)
-                pos= (px,py)
-                cv2.circle(img, pos, 2, (0, 255, 0),2)
-                h, w, channels = img.shape 
-                x= int(px/w * conf.sizeXmm)
-                y= int(py/h * conf.sizeYmm)
-                cv2.putText(img, "x:{}, y:{}".format(x,y), (px,py-20),cv2.FONT_HERSHEY_SIMPLEX, 0.55, (240, 0, 159), 2)
+                point = self.green_gobelet[j]
+                px = int(point.x)
+                py = int(point.y)
+                cv2.circle(img, (px,py), 2, (0, 255, 0),2)
+                point.toReal(conf)
+                cv2.putText(img, "x:{}, y:{}".format(point.rx,point.ry), (px,py-20),cv2.FONT_HERSHEY_SIMPLEX, 0.55, (240, 0, 159), 2)
         
         for j in range(len(self.robot)):
-                px = int(self.robot[j].x)
-                py = int(self.robot[j].y)
-                pos= (px,py)
-                cv2.circle(img, pos, 2, (255, 0, 255),2)
-                h, w, channels = img.shape 
-                x= int(px/w * conf.sizeXmm)
-                y= int(py/h * conf.sizeYmm)
-                cv2.putText(img, "x:{}, y:{}".format(x,y), (px,py-20),cv2.FONT_HERSHEY_SIMPLEX, 0.55, (240, 0, 159), 2)
+                point = self.robot[j]
+                px = int(point.x)
+                py = int(point.y)
+                cv2.circle(img, (px,py), 2, (255, 0, 255),2)
+                point.toReal(conf)
+                cv2.putText(img, "x:{}, y:{}".format(point.rx,point.ry), (px,py-20),cv2.FONT_HERSHEY_SIMPLEX, 0.55, (240, 0, 159), 2)
 
 
 class Point(object):
-    def  __init__(self,x,y,t =None ):
+    def  __init__(self,x,y,img_shape_h,img_shape_w,t =None ):
         self.x = x
         self.y = y 
-        if(t==None):
+        self.img_shape_h = img_shape_h
+        self.img_shape_w = img_shape_w
+        if(t == None):
             self.t = time.time()
         else:
             self.t = t
+    def toReal(self,conf):
+        self.rx = 3000-int(self.x/self.img_shape_w * conf.sizeXmm)
+        self.ry = 2000-int(self.y/self.img_shape_h * conf.sizeYmm)
