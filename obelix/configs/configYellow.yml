@@ -30,7 +30,7 @@ zeroyloc: 2000
 
 reduction: 4
 
-matrix_file: "calib_data/calib_matrix.npy"
+matrix_file: "calib_data/calib_matrixYellow.npy"
 
 #################################################################
 # Background diff
