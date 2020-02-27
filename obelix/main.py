@@ -7,7 +7,7 @@ import cProfile
 
 # Imports from our project
 from modules.calibrator import *
-from modules.gextractorNG import *
+from modules.gextractor import *
 from modules.dextractor import *
 from modules.fisheye import *
 from modules.settings import *
@@ -48,6 +48,9 @@ def main():
     # Generating data object (to stock collected data)
     data = DataExtractor(1)
     
+    # Creating GExtrator obj
+    gex = GExtractors() 
+
     i = 0
     changedConf = 0
     j = 1
@@ -69,11 +72,7 @@ def main():
         if(conf.matrix):
             img = calibobj.applyCalibration(img)
             img = cv2.resize(img, (0, 0), fx=conf.img_resize_after_perpective, fy=conf.img_resize_after_perpective)
-          
-        # Saving background
-        if(i == 0):
-            gex = NGExtractors(conf, img) 
-
+    
         # Clearing buffer
         data.clear()
         # Get Data
