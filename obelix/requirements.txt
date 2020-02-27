@@ -1,11 +1,11 @@
-imgutil==0.1.4
-imutils==0.5.3
+imgutil
+imutils
 numpy
-opencv-contrib-python
-opencv-python
-picamera==1.13
-pigpio==1.44
-pyserial==3.4
-PyYAML==5.3
-RPi.GPIO==0.7.0
+opencv-contrib-python==4.0.1.24
+opencv-python==4.1.1.26
+picamer
+pigpio
+pyserial
+PyYAML
+RPi.GPIO
 

@@ -34,11 +34,8 @@ def main():
     conf = Config()
     conf.load(conf_file)
 
+    # Initializing Communication Object
     com = Com()
-
-    # Generating FishEye remover object
-    if(conf.fish == 1):
-        fishremover = FRemover(1, conf.K, conf.D, conf.DIM)
        
     # Loading perspective correction matrix from file if exits
     if(conf.matrix == 1):
@@ -62,6 +59,9 @@ def main():
 
         # Removing fisheye
         if(conf.fish == 1):
+            if(i == 0):
+                # Generating FishEye remover object
+                fishremover = FRemover(1,img, conf.K, conf.D, conf.DIM)
             img = fishremover.removefish(img)
             img = cv2.resize(img, (0, 0), fx=conf.img_resize_after_fish, fy=conf.img_resize_after_fish)
         
