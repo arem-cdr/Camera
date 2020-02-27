@@ -93,12 +93,14 @@
 
 #### 1. Accès à /etc/rc.local
   ```sudo -i```
+  
   ```nano /etc/rc.local```
   
 #### 2. Modifiez /etc/rc.local
-  ```cd /home/pi/obelix/Camera/obelix/
+  ``` cd /home/pi/obelix/Camera/obelix/
   ./obelix/bin/python3 main.py &
-  exit 0```
+  exit 0 
+  ```
 
 ------------------------------------------------------------------------------------------
 
