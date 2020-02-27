@@ -40,10 +40,23 @@
 ------------------------------------------------------------------------------------------
 **:hammer: Démarrage rapide** 
 
-  - Installez Opencv, imutils, numpy et pyyaml.
-  - Lancez main.py.
+  #### 1. Installez pip
+  ```apt-get install python3-pip```
+
+  #### 2. Installez virtualenv
+  ```pip3 install virtualenv```
+
+  #### 3. Créez un virtualenv
+  ```virtualenv -p python3 obelix```
+
+  #### 4. Activez le virtualenv
+  ```source obelix/bin/activate```
+
+  #### 5. Téléchargez les libraries
+  ```pip3 install -r requirements.txt```
 
 ------------------------------------------------------------------------------------------
+# Documentation
 
 **Liste des modules qui peuvent être chargés dans main.py**
 
@@ -75,7 +88,20 @@
 
     Small module to test if opencv and the camera are working.
     
-    
+------------------------------------------------------------------------------------------
+**:hammer: Redémarrage sur le script** 
+
+#### 1. Accès à /etc/rc.local
+   ``` sudo -i
+      nano /etc/rc.local
+   ```
+#### 2. Modifiez /etc/rc.local
+  ```
+  cd /home/pi/obelix/Camera/obelix/
+  ./obelix/bin/python3 main.py &
+  exit 0
+  ```
+
 ------------------------------------------------------------------------------------------
 
  **Communication :**

@@ -42,7 +42,7 @@ def main():
        
     # Loading perspective correction matrix from file if exits
     if(conf.matrix == 1):
-        calibobj = Calib(conf.sizeXmm//conf.reduction,conf.sizeYmm//conf.reduction,conf.matrix,conf.calibfile)
+        calibobj = Calib(conf.sizeXmm//conf.reduction, conf.sizeYmm//conf.reduction, conf.matrix, conf.calibfile)
         calibobj.M = conf.M
 
     # Generating data object (to stock collected data)
@@ -57,41 +57,41 @@ def main():
         ret, img = cap.read()
         if(img is None):
             break
-        img = cv2.resize(img, (0, 0), fx=conf.img_resize_default,fy=conf.img_resize_default)
+        img = cv2.resize(img, (0, 0), fx=conf.img_resize_default, fy=conf.img_resize_default)
         #cv2.imshow('real', resized)
 
         # Removing fisheye
         if(conf.fish == 1):
             img = fishremover.removefish(img)
-            img = cv2.resize(img, (0, 0), fx=conf.img_resize_after_fish,fy=conf.img_resize_after_fish)
+            img = cv2.resize(img, (0, 0), fx=conf.img_resize_after_fish, fy=conf.img_resize_after_fish)
         
         # Applying perspective correction matrix to frame
         if(conf.matrix):
             img = calibobj.applyCalibration(img)
-            img = cv2.resize(img, (0, 0), fx=conf.img_resize_after_perpective,fy=conf.img_resize_after_perpective)
+            img = cv2.resize(img, (0, 0), fx=conf.img_resize_after_perpective, fy=conf.img_resize_after_perpective)
           
         # Saving background
         if(i == 0):
-            gex = NGExtractors(conf,img) 
+            gex = NGExtractors(conf, img) 
 
         # Clearing buffer
         data.clear()
         # Get Data
-        img_result = gex.extract(img,data,conf)
-        com.send_Point_list(data.green_gobelet,1,conf)
-        com.send_Point_list(data.red_gobelet,2,conf)
-        com.send_Point_list(data.robot,3,conf)
+        img_result = gex.extract(img, data, conf)
+        com.send_Point_list(data.green_gobelet, 1, conf)
+        com.send_Point_list(data.red_gobelet, 2, conf)
+        com.send_Point_list(data.robot, 3, conf)
         
         # Debug
         if(conf.debug):
-            data.showTrails(img,3)
-            data.showPos(img,conf)
+            data.showTrails(img, 3)
+            data.showPos(img, conf)
             img_result = cv2.resize(img, (0, 0), fx=conf.img_resize_display,fy=conf.img_resize_display)
             cv2.imshow('mask + track', img_result)
 
         # FPS
         if(conf.fps):
-            if(time.time()-t>1): 
+            if(time.time() - t > 1): 
                 t = time.time()
                 print("[INFO] {} FPS".format(j))
                 j = 1
