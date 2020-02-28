@@ -18,7 +18,7 @@ def click_and_crop(event, x, y, flags, param):
 cap = cv2.VideoCapture(0)
 ret, img = cap.read()
 img = cv2.resize(img, (0, 0), fx=conf.img_resize_default,fy=conf.img_resize_default)
-fishremover = FRemover(1, conf.K, conf.D, conf.DIM)
+fishremover = FRemover(img, 1, conf.K, conf.D, conf.DIM)
 img = fishremover.removefish(img)
 img = cv2.resize(img, (0, 0), fx=conf.img_resize_after_fish,fy=conf.img_resize_after_fish)
 clone = img.copy()
@@ -35,7 +35,7 @@ while True:
 
 if len(refPt) == 4 :
     M,maxHeight,maxWidth = four_point_transform(refPt,conf.sizeYmm//conf.reduction ,conf.sizeXmm//conf.reduction)
-    np.save("calib_data/calib_matrix.npy",M)
-    print("Saved to calib_data/calib_matrix.npy")
+    np.save("calib_data/calib_matrixYellow.npy",M)
+    print("Saved to calib_data/calib_matrixYellow.npy")
 
 cv2.destroyAllWindows()

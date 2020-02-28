@@ -25,11 +25,12 @@ def main():
     # Base config load
     bc = BaseConfig()
     bc.load("config.yml")
-    if(gpioM.led):
+    if(not gpioM.led):
         conf_file = bc.confBlue
     else:
         conf_file = bc.confYellow
-    
+    print("Loaded: "+conf_file)
+
     # Loading data from specific config.yml
     conf = Config()
     conf.load(conf_file)
@@ -61,7 +62,7 @@ def main():
         if(conf.fish == 1):
             if(i == 0):
                 # Generating FishEye remover object
-                fishremover = FRemover(1,img, conf.K, conf.D, conf.DIM)
+                fishremover = FRemover(img,1, conf.K, conf.D, conf.DIM)
             img = fishremover.removefish(img)
             img = cv2.resize(img, (0, 0), fx=conf.img_resize_after_fish, fy=conf.img_resize_after_fish)
         

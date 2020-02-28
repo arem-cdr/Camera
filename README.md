@@ -97,9 +97,10 @@
   ```nano /etc/rc.local```
   
 #### 2. Modifiez /etc/rc.local
-  ``` cd /home/pi/obelix/Camera/obelix/
-  ./obelix/bin/python3 main.py &
-  exit 0 
+  ``` exec 1>/tmp/rc.local.log 2>&1 
+      set -x
+      su pi -c "cd /home/pi/Documents/obelix/Camera/obelix && python3 main.py"  &
+      exit 0
   ```
 
 ------------------------------------------------------------------------------------------
