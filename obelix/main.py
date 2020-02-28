@@ -12,12 +12,12 @@ from modules.dextractor import *
 from modules.fisheye import *
 from modules.settings import *
 from modules.network import *
+from modules.track import *
 from modules.gpiomanager import *
 
 # Here we build the code that calls other scripts to do all the work
 def main():
-    # Opening data stream
-    cap = cv2.VideoCapture(0)
+    
 
     # Initializing GPIO
     gpioM = GpioManager()
@@ -37,35 +37,49 @@ def main():
 
     # Initializing Communication Object
     com = Com()
-       
+
+    # Generating data object (to stock collected data)
+    data = DataExtractor(1)
+    
+
     # Loading perspective correction matrix from file if exits
     if(conf.matrix == 1):
         calibobj = Calib(conf.sizeXmm//conf.reduction, conf.sizeYmm//conf.reduction, conf.matrix, conf.calibfile)
         calibobj.M = conf.M
 
-    # Generating data object (to stock collected data)
-    data = DataExtractor(1)
-    
+    # Tracker object to calibrate with central aruco
+    track = Tracker()
+
+    # Some counters
     i = 0
     changedConf = 0
     j = 1
-    t = time.time()
+    fps_t = time.time()
+    start_t = time.time()
+    # Opening data stream
+    cap = cv2.VideoCapture(0)
 
     while(cap.isOpened()):
         ret, img = cap.read()
         if(img is None):
             break
         img = cv2.resize(img, (0, 0), fx=conf.img_resize_default, fy=conf.img_resize_default)
-        #cv2.imshow('real', resized)
+        # cv2.imshow('real', resized)
 
         # Removing fisheye
         if(conf.fish == 1):
             if(i == 0):
                 # Generating FishEye remover object
-                fishremover = FRemover(img,1, conf.K, conf.D, conf.DIM)
+                fishremover = FRemover(img, 1, conf.K, conf.D, conf.DIM)
             img = fishremover.removefish(img)
             img = cv2.resize(img, (0, 0), fx=conf.img_resize_after_fish, fy=conf.img_resize_after_fish)
         
+        # Check camera position 
+        if(time.time() - start_t < conf.calib_check_time_in_sec):
+            aruco_pos = track.getPos(img, 7)
+        else:
+            aruco_pos = [1]
+            
         # Applying perspective correction matrix to frame
         if(conf.matrix):
             img = calibobj.applyCalibration(img)
@@ -92,14 +106,17 @@ def main():
 
         # FPS
         if(conf.fps):
-            if(time.time() - t > 1): 
-                t = time.time()
+            if(time.time() - fps_t > 1): 
+                fps_t = time.time()
                 print("[INFO] {} FPS".format(j))
                 j = 1
         
+        
         # Led & Switch
-        changedConf = gpioM.update()
+        changedConf = gpioM.update(aruco_pos,conf)
         if(changedConf):
+            gpioM.led20.reset()
+            gpioM.led21.reset()
             break
         
         i += 1

@@ -14,6 +14,14 @@ matrix_K: "calib_data/matrix_k.npy"
 array_DIM: "calib_data/array_dim.npy"
 
 #################################################################
+# Check camera pos
+#################################################################
+calib_check_time_in_sec: 120
+
+loc_aruco_x: 400
+loc_aruco_y: 400
+
+#################################################################
 # Perspective
 #################################################################
 enable_perpective_correction: 1

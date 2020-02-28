@@ -3,6 +3,7 @@ import numpy as np
 from modules.calibrator import *
 from modules.fisheye import *
 from modules.settings import *
+from modules.track import *
 
 refPt = []
 conf = Config()
@@ -34,6 +35,10 @@ while True:
         break
 
 if len(refPt) == 4 :
+    track = Tracker()
+    aruco_pos = track.getPos(img, 7)
+    print("Cx",aruco_pos[0])
+    print("Cy",aruco_pos[1])
     M,maxHeight,maxWidth = four_point_transform(refPt,conf.sizeYmm//conf.reduction ,conf.sizeXmm//conf.reduction)
     np.save("calib_data/calib_matrixYellow.npy",M)
     print("Saved to calib_data/calib_matrixYellow.npy")

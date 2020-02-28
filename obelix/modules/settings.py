@@ -13,6 +13,12 @@ class Config(object):
         self.debug = raw['enable_debug']
         self.fps = raw['enable_fps']
 
+        self.calib_check_time_in_sec = int(raw['calib_check_time_in_sec'])
+        self.loc_aruco_x = int(raw['loc_aruco_x'])
+        self.loc_aruco_y = int(raw['loc_aruco_y'])
+
+
+
         self.matrix = raw['enable_perpective_correction']
         self.sizeXmm = raw['sizeXmm']
         self.sizeYmm = raw['sizeYmm']
