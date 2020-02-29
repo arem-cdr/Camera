@@ -31,8 +31,8 @@ class Tracker(object):
         for i in range():
             if(ids[i]==tagid):
                 rect = corners[i][0]
-                cX = np.average(rect[:, 0])
-                cY = np.average(rect[:, 1]) 
+                cX = int(np.average(rect[:, 0]))
+                cY = int(np.average(rect[:, 1]))
                 l = [cX,cY] 
         return l
 

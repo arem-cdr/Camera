@@ -76,7 +76,7 @@ def main():
         
         # Check camera position 
         if(time.time() - start_t < conf.calib_check_time_in_sec):
-            aruco_pos = track.getPos(img, 7)
+            aruco_pos = track.getPos(img, 42)
         else:
             aruco_pos = [1]
             
@@ -115,8 +115,6 @@ def main():
         # Led & Switch
         changedConf = gpioM.update(aruco_pos,conf)
         if(changedConf):
-            gpioM.led20.reset()
-            gpioM.led21.reset()
             break
         
         i += 1

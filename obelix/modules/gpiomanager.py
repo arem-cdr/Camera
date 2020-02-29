@@ -1,6 +1,6 @@
 
 import RPi.GPIO as GPIO
-from led import *
+
 
 class GpioManager(object):
     def  __init__(self):
@@ -12,8 +12,8 @@ class GpioManager(object):
         GPIO.setup(23,GPIO.OUT)
         GPIO.setup(18,GPIO.OUT)
         GPIO.setup(14,GPIO.OUT)
-        self.led20 = Led(20)
-        self.led21 = Led(21)
+        #self.led20 = Led(20)
+        #self.led21 = Led(21)
         
         self.led = GPIO.input(15)
         if(self.led):
@@ -24,7 +24,7 @@ class GpioManager(object):
             GPIO.output(14,GPIO.HIGH)
 
     def update(self, aruco_pos, conf):
-        self.calib_blink(aruco_pos, conf)
+        #self.calib_blink(aruco_pos, conf)
         if(GPIO.input(15) != self.led):
             if(self.led):
                 GPIO.output(14,GPIO.LOW)
@@ -42,7 +42,7 @@ class GpioManager(object):
             self.blink = 1
         return 0
     
-    def calib_blink(self,aruco_pos, conf):
+    """ def calib_blink(self,aruco_pos, conf):
         if(len(aruco_pos)!=2):
             if(len(aruco_pos)==1):
                 self.led20.on()
@@ -68,5 +68,5 @@ class GpioManager(object):
         if(diffy< 5):
             self.led21.on()
         else:
-            self.led21.blink(0.05, (diffy-b)/a)
+            self.led21.blink(0.05, (diffy-b)/a) """
         
