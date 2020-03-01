@@ -7,7 +7,10 @@ from modules.track import *
 
 refPt = []
 conf = Config()
-conf.load("configs/configYellow.yml")
+c = "Yellow"
+# c = "Blue"
+
+conf.load("configs/config"+c+".yml")
 
 def click_and_crop(event, x, y, flags, param):
     global refPt
@@ -40,7 +43,7 @@ if len(refPt) == 4 :
     print("Aruco Cx",aruco_pos[0])
     print("Aruco Cy",aruco_pos[1])
     M,maxHeight,maxWidth = four_point_transform(refPt,conf.sizeYmm//conf.reduction ,conf.sizeXmm//conf.reduction)
-    np.save("calib_data/calib_matrixYellow.npy",M)
-    print("Saved to calib_data/calib_matrixYellow.npy")
+    np.save("calib_data/calib_matrix"+c+".npy",M)
+    print("Saved to calib_data/calib_matrix"+c+".npy")
 
 cv2.destroyAllWindows()

@@ -27,20 +27,13 @@ class Tracker(object):
         aruco_dict = aruco.Dictionary_get(aruco.DICT_4X4_50)
         parameters =  aruco.DetectorParameters_create()
         corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, aruco_dict, parameters=parameters)
-        l = []
-        for i in range():
+        l = [1]
+        if ids is None:
+            return l
+        for i in range(len(ids)):
             if(ids[i]==tagid):
                 rect = corners[i][0]
-                cX = int(np.average(rect[:, 0]))
-                cY = int(np.average(rect[:, 1]))
+                cX = np.average(rect[:, 0])
+                cY = np.average(rect[:, 1])
                 l = [cX,cY] 
         return l
-
-def maxX(l):
-    return max([l[i][0] for i in range(len(l))])
-def maxY(l):
-    return max([l[i][1] for i in range(len(l))])
-def minX(l):
-    return min([l[j][0] for j in range(len(l))])
-def minY(l):
-    return min([l[i][1] for i in range(len(l))])

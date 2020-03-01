@@ -1,89 +1,60 @@
 import RPi.GPIO as GPIO
 import time
 import threading
-from threading import Thread
 
-class Led(object):
+class LEDC():
+    def __init__(self,pin):
+        self.__loop = True
 
-    LED_OFF = 0
-    LED_ON = 1
-    LED_FLASHING = 2
-
-    # the short time sleep to use when the led is on or off to ensure the led responds quickly to changes to blinking
-    FAST_CYCLE = 0.05
-
-    def __init__(self, led_pin):
-        # create the semaphore used to make thread exit
-        self.pin_stop = threading.Event()
-        # the pin for the LED
-        self.__led_pin = led_pin
-        # initialise the pin and turn the led off
+        self.__led_pin = pin
         GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
         GPIO.setup(self.__led_pin, GPIO.OUT)
-        # the mode for the led - off/on/flashing
-        self.__ledmode = Led.LED_OFF
-        # make sure the LED is off (this also initialises the times for the thread)
-        self.off()
-        # create the thread, keep a reference to it for when we need to exit
-        self.__thread = threading.Thread(name='ledblink'+led_pin,target=self.__blink_pin)
-        # start the thread
-        self.__thread.start()
-
-    def blink(self, time_on=0.050, time_off=1):
-        # blinking will start at the next first period
-        # because turning the led on now might look funny because we don't know
-        # when the next first period will start - the blink routine does all the
-        # timing so that will 'just work'
-        self.__ledmode = Led.LED_FLASHING
-        self.__time_on = time_on
-        self.__time_off = time_off
-
-    def off(self):
-        self.__ledmode = LED_OFF
-        # set the cycle times short so changes to ledmode are picked up quickly
-        self.__time_on = Led.FAST_CYCLE
-        self.__time_off = Led.FAST_CYCLE
-        # could turn the LED off immediately, might make for a short flicker on if was blinking
+        self.__state = 0
+       
 
     def on(self):
-        self.__ledmode = LED_ON
-        # set the cycle times short so changes to ledmode are picked up quickly
-        self.__time_on = Led.FAST_CYCLE
-        self.__time_off = Led.FAST_CYCLE
-        # could turn the LED on immediately, might make for a short flicker off if was blinking
+        self.__loop = False
+        self.maybejoin()
+        self.__turnledon()
 
-    def reset(self):
-        # set the semaphore so the thread will exit after sleep has completed
-        self.pin_stop.set()
-        # wait for the thread to exit
-        self.__thread.join()
-        # now clean up the GPIO
-        GPIO.cleanup()
+    def off(self ):
+        self.__loop = False
+        self.maybejoin()
+        self.__turnledoff()
 
-    ############################################################################
-    # below here are private methods
-    def __turnledon(self, pin):
-        GPIO.output(pin, GPIO.LOW)
+    def maybejoin(self):
+        if self.__threading.isAlive():
+            self.__threading.join()
 
-    def __turnledoff(self, pin):
-        GPIO.output(pin, GPIO.HIGH)
+    def blink(self, pitch):
+        self.__pitch = pitch
+        self.__threading = threading.Thread(target=self.__blink)
+        self.__threading.start()
+    
+    def changeblink(self, pitch):
+        if(not self.__loop):
+           
+            self.blink(pitch)
+        else:
+            self.__pitch = pitch
 
-    # this does all the work
-    # If blinking, there are two sleeps in each loop
-    # if on or off, there is only one sleep to ensure quick response to blink()
-    def __blink_pin(self):
-        while not self.pin_stop.is_set():
-            # the first period is when the LED will be on if blinking
-            if self.__ledmode == Led.LED_ON or self.__ledmode == Led.LED_FLASHING: 
+    def __turnledon(self):
+        GPIO.output(self.__led_pin, GPIO.HIGH)
+
+    def __turnledoff(self):
+        GPIO.output(self.__led_pin, GPIO.LOW)
+
+    def __blink(self):
+        self.__loop = True
+        while self.__loop:
+            if(not self.__state):
                 self.__turnledon()
+                self.__state = 1
             else:
                 self.__turnledoff()
-            # this is the first sleep - the 'on' time when blinking
-            time.sleep(self.__time_on)
-            # only if blinking, turn led off and do a second sleep for the off time
-            if self.__ledmode == Led.LED_FLASHING:
-                self.__turnledoff()
-                # do an extra check that the stop semaphore hasn't been set before the off-time sleep
-                if not self.pin_stop.is_set():
-                    # this is the second sleep - off time when blinking
-                    time.sleep(self.__time_off)
+                self.__state = 0
+            time.sleep(self.__pitch/2)
+        self.__turnledoff()
+
+        

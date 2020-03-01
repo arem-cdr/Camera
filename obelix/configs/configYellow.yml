@@ -21,6 +21,8 @@ calib_check_time_in_sec: 120
 loc_aruco_x: 400
 loc_aruco_y: 400
 
+loc_aruco_acceptable_diff: 1.1
+
 #################################################################
 # Perspective
 #################################################################
@@ -66,9 +68,21 @@ points:
   A:
     x: 0
     y: 0
+    h: 10
+    w: 10
+    expected_h: 0
+    expected_s: 0
+    expected_v: 0
+    tolerated_error: 0.1
   B: 
     x: 100
     y: 100
+    h: 10
+    w: 10
+    expected_h: 0
+    expected_s: 0
+    expected_v: 0
+    tolerated_error: 0.1
 
 #################################################################
 #
