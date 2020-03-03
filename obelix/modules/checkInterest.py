@@ -1,7 +1,7 @@
 import cv2
+import numpy as np
 
-
-class CArea_Interest(object):
+class CInterest(object):
     def  __init__(self,interests):
         self.interest = interests
     def display(self,img):
