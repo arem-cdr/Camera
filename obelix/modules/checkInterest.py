@@ -7,19 +7,21 @@ class CInterest(object):
     def display(self,img):
         for key in self.interest.keys():
             point = self.interest[key]
-            x = float(point['x'])
-            y = float(point['y'])
-            h = float(point['h'])
-            w = float(point['w'])
+            x = int(point['x'])
+            y = int(point['y'])
+            h = int(point['h'])
+            w = int(point['w'])
             start_point = (x-w, y-h)
             end_point = (x+w, y+h)
-            cv2.rect(img, start_point, end_point, (255, 0, 0) , 1)
+            color = (255, 0, 0)
+            cv2.rectangle(img, start_point, end_point, color, 1)
             zone = img[int(y-h/2):int(y+h/2),int(x-w/2):int(x+w/2)]
             zonehsv = cv2.cvtColor(zone,cv2.COLOR_BGR2HSV)
             avg_color_per_row = np.average(zonehsv, axis=0)
             avg_color = np.average(avg_color_per_row, axis=0)
             print("Key ",key," ",avg_color)
-
+        return img
+    
     def extract(self,img):
         l = []
         for key in self.interest.keys():
@@ -39,7 +41,7 @@ class CInterest(object):
             diffh =  abs(avg_color[0]-expected_h)
             diffs =  abs(avg_color[1]-expected_s)
             diffv =  abs(avg_color[2]-expected_v)
-            if(diffh>tolerated_error):
+            if(diffh < tolerated_error):
                 l.append(key)
         return l
 

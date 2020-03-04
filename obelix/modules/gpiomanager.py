@@ -15,8 +15,6 @@ class GpioManager(object):
         GPIO.setup(14,GPIO.OUT)
         self.led20 = LEDC(20)
         self.led21 = LEDC(21)
-        self.led20.off()
-        self.led21.off()
         self.led = GPIO.input(15)
         if(self.led):
                 GPIO.output(14,GPIO.LOW)
@@ -47,6 +45,7 @@ class GpioManager(object):
     def calib_blink(self,aruco_pos, conf):
         if(len(aruco_pos)!=2):
             if(len(aruco_pos)==1):
+                
                 self.led20.off()
                 self.led21.off()
             return 
@@ -64,13 +63,15 @@ class GpioManager(object):
         b = min_diff - a*min_t
 
         if(diffx < conf.loc_aruco_acceptable_diff):
-            self.led20.on()
+       
+            self.led20.onn()
         else:
             fx = (diffx-b)/a
             self.led20.changeblink(fx)
 
         if(diffy < conf.loc_aruco_acceptable_diff):
-            self.led21.on()
+       
+            self.led21.onn()
         else:
             fy = (diffy-b)/a
             self.led21.changeblink(fy)

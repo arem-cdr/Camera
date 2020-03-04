@@ -14,6 +14,8 @@ from modules.settings import *
 from modules.network import *
 from modules.track import *
 from modules.gpiomanager import *
+from modules.checkInterest import *
+
 
 # Here we build the code that calls other scripts to do all the work
 def main():
@@ -25,11 +27,11 @@ def main():
     # Base config load
     bc = BaseConfig()
     bc.load("config.yml")
-    if(not gpioM.led):
+    if(gpioM.led):
         conf_file = bc.confBlue
     else:
         conf_file = bc.confYellow
-    print("Loaded: "+conf_file)
+    print("Loaded: " + conf_file)
 
     # Loading data from specific config.yml
     conf = Config()
@@ -49,6 +51,8 @@ def main():
 
     # Tracker object to calibrate with central aruco
     track = Tracker()
+    
+    interests = CInterest(conf.points)
 
     # Some counters
     i = 0
@@ -84,7 +88,14 @@ def main():
         if(conf.matrix):
             img = calibobj.applyCalibration(img)
             img = cv2.resize(img, (0, 0), fx=conf.img_resize_after_perpective, fy=conf.img_resize_after_perpective)
-          
+        
+        # Interest 
+        # img = interests.display(img)
+        # cv2.imshow('interest', img)
+        # l = interests.extract(img)
+        # com.send_Interest_list(l)
+        # print(l)
+
         # Saving background
         if(i == 0):
             gex = NGExtractors(conf, img) 

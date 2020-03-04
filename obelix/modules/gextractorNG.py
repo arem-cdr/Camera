@@ -6,9 +6,6 @@ from modules.dextractor import *
 from imutils import contours
 
 
-
-
-
 class NGExtractors(object):
     def  __init__(self,conf,background):
         if(not(conf.back)):
@@ -34,8 +31,7 @@ class NGExtractors(object):
         thresh = cv2.threshold(difference, conf.threshold, 255, cv2.THRESH_BINARY)[1]
         thresh = cv2.dilate(thresh, None, iterations=2)
         res = cv2.bitwise_and(img,img, mask= thresh)
-
-
+        #cv2.imshow('bitwise',res)
 
         ###############################################################
         ## FIND OBJECTS 
@@ -49,7 +45,12 @@ class NGExtractors(object):
             box = cv2.boxPoints(box) 
             box = np.array(box, dtype="int")
             cv2.drawContours(res, [box.astype("int")], -1, (0, 255, 0), 2)
-
+            # Is robot ?
+            robot = 0
+            robot_area = conf.size_min_robot
+            if(cv2.contourArea(c)>robot_area):
+                robot = 1
+            
             # Color ?
             cX = np.average(box[:, 0])
             cY = np.average(box[:, 1]) 
@@ -63,7 +64,11 @@ class NGExtractors(object):
             teta = np.arctan2(smin[1]-fmin[1],smin[0]-fmin[0])
             xmid = (fmin[0]+smin[0])/2 
             ymid = (fmin[1]+smin[1])/2
-            proportion = conf.obj_center_ratio
+            if(robot):
+                proportion = conf.robot_center_ratio
+            else:
+                proportion = conf.obj_center_ratio
+                
             k = getHW(box)
             h = k[0]
             w = k[1]
@@ -75,12 +80,6 @@ class NGExtractors(object):
                 ydelta = -ydelta
             centerx =  xmid+xdelta
             centery = ymid + ydelta
-
-            # Is robot ?
-            robot = 0
-            robot_area = conf.size_min_robot
-            if(cv2.contourArea(c)>robot_area):
-                robot = 1
 
             # Exporting info
             h, w, channels = img.shape 

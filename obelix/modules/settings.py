@@ -46,6 +46,7 @@ class Config(object):
         self.size_min = raw['noise_size']
         self.size_min_robot = raw['min_robot_size']
         self.obj_center_ratio = float(raw['obj_center_ratio'])
+        self.robot_center_ratio = float(raw['robot_center_ratio'])
 
         # Points
         self.points = raw['points']

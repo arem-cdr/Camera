@@ -4,23 +4,29 @@ import threading
 
 class LEDC():
     def __init__(self,pin):
-        self.__loop = True
+        self.__loop = False
 
         self.__led_pin = pin
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         GPIO.setup(self.__led_pin, GPIO.OUT)
+        GPIO.output(self.__led_pin, GPIO.LOW)
         self.__state = 0
        
 
     def on(self):
+        
         self.__loop = False
         self.maybejoin()
         self.__turnledon()
-
-    def off(self ):
+    def onn(self):
+        
         self.__loop = False
-        self.maybejoin()
+        self.__turnledon()
+    def off(self ):
+        
+        self.__loop = False
+        #self.maybejoin()
         self.__turnledoff()
 
     def maybejoin(self):
@@ -56,5 +62,3 @@ class LEDC():
                 self.__state = 0
             time.sleep(self.__pitch/2)
         self.__turnledoff()
-
-        

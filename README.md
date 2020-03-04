@@ -109,16 +109,18 @@
 
 
 
-| Catégorie| Valeur | Informations transmises | Fin de séquence |
+| Catégorie| Niveau encapsulation | Valeur | Informations transmises | Séquence après valeur | Fin de séquence |
 |----------|--------|-------------------------|-----------------|
-| Objet | -101 | Obstacles perçu  | -1 |
-| Objet | 1 | Gobelet vert | -1 |
-| Objet | 2 | Gobelet rouge | -1 |
-| Objet | 3 | Robot | -1 |
+| Objet | 1 |  -101 | Obstacle perçu  | (int int)*n | -1 |
+| Objet | 2 | 1 | Gobelets vert | (int int)*n | -1 |
+| Objet |  2 | 2 | Gobelets rouge | (int int)*n | -1 |
+| Objet |  2 | 3 | Robot | (int int)*n | -1 |
+| Objet | 1 | -150 | Action realise | (int)*n | -1 |
 
-Exemple valide:
+Exemples valides:
 
--101 1 X1 Y1 2 X2 Y2 1 X3 Y3 -1
+-101 1 X1 Y1 2 X2 Y2 1 X3 Y3 -1 // Gobelet vert(X1,Y1) , Gobelet rouge(X2,Y2) , Gobelet vert(X3,Y3)
+-150 A1 A2 A3 -1 // Actions A1, A2, A3 réalisées
 
 ------------------------------------------------------------------------------------------
 
@@ -130,7 +132,8 @@ Exemple valide:
 | 23 | FPS rate  | Vérifier la vitesse d'execution du workflow |
 | 18 | Diode Jaune | Active lorsque config en mode jaune |
 | 14 | Diode Bleue | Active lorsque config en mode bleu |
-
+| 20 | Diode Blanche | Active pendant la période de calibration (fonctionne comme un radar de recul) |
+| 21 | Diode Blanche | Active pendant la période de calibration (fonctionne comme un radar de recul) |
   
 
 
