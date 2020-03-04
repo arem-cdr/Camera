@@ -110,17 +110,17 @@
 
 
 | Catégorie| Niveau encapsulation | Valeur | Informations transmises | Séquence après valeur | Fin de séquence |
-|----------|--------|-------------------------|-----------------|
-| Objet | 1 |  -101 | Obstacle perçu  | (int int)*n | -1 |
-| Objet | 2 | 1 | Gobelets vert | (int int)*n | -1 |
-| Objet |  2 | 2 | Gobelets rouge | (int int)*n | -1 |
-| Objet |  2 | 3 | Robot | (int int)*n | -1 |
-| Objet | 1 | -150 | Action realise | (int)*n | -1 |
+|----------|---------|---------|-------------------------|----------------|-----------------|
+| Objet | 1 |  -101 | Obstacle perçu  | Objet 1 | -1 |
+| Objet 1 | 2 | 1 | Gobelets vert | (int int) n_fois | -1 |
+| Objet 1 |  2 | 2 | Gobelets rouge | (int int) n_fois  | -1 |
+| Objet 1 |  2 | 3 | Robot | (int int) n_fois | -1 |
+| Actions | 1 | -150 | Action realise | (int) n_fois | -1 |
 
-Exemples valides:
+**Exemples valides:**
 
--101 1 X1 Y1 2 X2 Y2 1 X3 Y3 -1 // Gobelet vert(X1,Y1) , Gobelet rouge(X2,Y2) , Gobelet vert(X3,Y3)
--150 A1 A2 A3 -1 // Actions A1, A2, A3 réalisées
+- -101 1 X1 Y1 2 X2 Y2 1 X3 Y3 -1 // Gobelet vert(X1,Y1) , Gobelet rouge(X2,Y2) , Gobelet vert(X3,Y3)
+- -150 A1 A2 A3 -1 // Actions A1, A2, A3 réalisées
 
 ------------------------------------------------------------------------------------------
 
