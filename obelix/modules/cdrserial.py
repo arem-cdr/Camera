@@ -3,25 +3,6 @@ import serial
 MAX_FRAME_SIZE = 200
 MESSAGE_HISTORY_SIZE = 5
 
-##################################################
-
-class File:
-	def __init__(self, max_len):
-		self.array = []
-		self.max_len = max_len
-
-	def push(self, data):
-		self.array.append(data)
-		while(len(self.array) > self.max_len):
-			self.pop()
-
-	def pop(self):
-		data = self.array[0]
-		self.array = self.array[1:]
-		return data
-
-##################################################
-
 class CDRSerial:
 	def __init__(self, portname, baud):
 		# standard python serial port
@@ -40,8 +21,6 @@ class CDRSerial:
 	
 	def close(self):
 		self.ser.close()
-
-
 
 	def send(self, message):
 		for i in range(len(message)):
@@ -111,3 +90,18 @@ class CDRSerial:
 	def __push_to_buffer_r(self, address, value):
 		if(0 <= address and address < 4 and len(self.buffer_r[address]) <= 5):
 			self.buffer_r[address].append(value)
+
+class File:
+	def __init__(self, max_len):
+		self.array = []
+		self.max_len = max_len
+
+	def push(self, data):
+		self.array.append(data)
+		while(len(self.array) > self.max_len):
+			self.pop()
+
+	def pop(self):
+		data = self.array[0]
+		self.array = self.array[1:]
+		return data

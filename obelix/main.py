@@ -15,7 +15,7 @@ from modules.network import *
 from modules.track import *
 from modules.gpiomanager import *
 from modules.checkInterest import *
-
+from modules.backgroundup import *
 
 # Here we build the code that calls other scripts to do all the work
 def main():
@@ -52,7 +52,11 @@ def main():
     # Tracker object to calibrate with central aruco
     track = Tracker()
     
-    interests = CInterest(conf.points)
+    # Interest track
+    # interests = CInterest(conf.points)
+
+    # Auto regen background
+    # backupdate = BackgroundUp(conf)
 
     # Some counters
     i = 0
@@ -96,7 +100,7 @@ def main():
         # com.send_Interest_list(l)
         # print(l)
 
-        # Saving background
+        # Loading or Saving background
         if(i == 0):
             gex = NGExtractors(conf, img) 
 
@@ -108,6 +112,9 @@ def main():
         com.send_Point_list(data.red_gobelet, 2, conf)
         com.send_Point_list(data.robot, 3, conf)
         
+        # Background update
+        # backupdate.update(img, start_t, gex)
+
         # Debug
         if(conf.debug):
             data.showTrails(img, 3)

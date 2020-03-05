@@ -14,16 +14,6 @@ matrix_K: "calib_data/matrix_k.npy"
 array_DIM: "calib_data/array_dim.npy"
 
 #################################################################
-# Check camera pos
-#################################################################
-calib_check_time_in_sec: 1
-
-loc_aruco_x: 358.25
-loc_aruco_y: 132.5
-
-loc_aruco_acceptable_diff: 1.1
-
-#################################################################
 # Perspective
 #################################################################
 enable_perpective_correction: 1
@@ -41,6 +31,36 @@ zeroyloc: 2000
 reduction: 4
 
 matrix_file: "calib_data/calib_matrixYellow.npy"
+
+#################################################################
+# Check camera pos
+#################################################################
+calib_check_time_in_sec: 1
+
+loc_aruco_x: 358.25
+loc_aruco_y: 132.5
+
+loc_aruco_acceptable_diff: 1.1
+
+#################################################################
+# Background diff helpers
+#################################################################
+
+zones_to_retake:
+  A:
+    retake_time: 5
+    x1: 50
+    y1: 50 
+    x2: 150
+    y2: 150
+    
+zones_to_exclude:
+  A:
+    exclude_until_time: 5
+    x1: 50
+    y1: 50 
+    x2: 150
+    y2: 150
 
 #################################################################
 # Background diff

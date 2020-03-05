@@ -21,6 +21,10 @@ class Config(object):
         self.loc_aruco_y = float(raw['loc_aruco_y'])
         self.loc_aruco_acceptable_diff = float(raw['loc_aruco_acceptable_diff'])
 
+        # Zones to retake and exclude
+        self.zones_to_retake = raw['zones_to_retake']
+        self.zones_to_exclude = raw['zones_to_exclude']
+
         # Calib data
         self.matrix = raw['enable_perpective_correction']
         self.sizeXmm = raw['sizeXmm']

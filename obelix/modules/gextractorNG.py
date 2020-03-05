@@ -44,7 +44,8 @@ class NGExtractors(object):
             box = cv2.minAreaRect(c)
             box = cv2.boxPoints(box) 
             box = np.array(box, dtype="int")
-            cv2.drawContours(res, [box.astype("int")], -1, (0, 255, 0), 2)
+            if(conf.debug):
+                cv2.drawContours(res, [box.astype("int")], -1, (0, 255, 0), 2)
             # Is robot ?
             robot = 0
             robot_area = conf.size_min_robot
@@ -89,7 +90,7 @@ class NGExtractors(object):
 
 
 def dist(p1,p2):
-    return np.sqrt((p2[1]-p1[1])**2 + (p2[0]-p1[0])**2)
+    return (p2[1]-p1[1])**2 + (p2[0]-p1[0])**2)
 
 def getHW(box):
     l = []
@@ -98,7 +99,7 @@ def getHW(box):
         l.append(dist(plast,p))
         plast = p
     l.pop()
-    u= [np.max(l),np.min(l)]
+    u= [np.sqrt(np.max(l)),np.sqrt(np.min(l))]
     return u
 
         
