@@ -20,4 +20,4 @@ class BackgroundUp(object):
                 zone = img[int(y1):int(y2),int(x1):int(x2)]
                 zone = cv2.cvtColor(zone, cv2.COLOR_BGR2GRAY)
                 zone = cv2.GaussianBlur(zone, (21, 21), 0)
-                gextractorng.background[int(y2):int(y1),int(x1):int(x2)] = zone
+                gextractorng.background[int(y1):int(y2),int(x1):int(x2)] = zone
