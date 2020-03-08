@@ -104,7 +104,7 @@ def main():
         if(i == 0):
             gex = NGExtractors(conf, img) 
         # Background update
-        backupdate.update(img, start_t, gex)
+        backupdate.update(img, start_t, gex,conf)
         # Clearing buffer
         data.clear()
         # Get Data
