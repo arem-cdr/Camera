@@ -10,6 +10,7 @@ class GpioManager(object):
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         GPIO.setup(15, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.setup(23,GPIO.OUT)
         GPIO.setup(18,GPIO.OUT)
         GPIO.setup(14,GPIO.OUT)
@@ -25,6 +26,8 @@ class GpioManager(object):
 
     def update(self, aruco_pos, conf):
         self.calib_blink(aruco_pos, conf)
+        if(GPIO.input(26)):
+            print("ok")
         if(GPIO.input(15) != self.led):
             if(self.led):
                 GPIO.output(14,GPIO.LOW)
