@@ -65,7 +65,7 @@ zones_to_exclude:
 #################################################################
 # Background diff
 #################################################################
-threshold: 15
+threshold: 30
 
 enable_background_diff_from_file: 0
 
@@ -110,4 +110,4 @@ img_resize_after_fish: 1
 
 img_resize_after_perpective: 1
 
-img_resize_display: 1.2
+img_resize_display: 1

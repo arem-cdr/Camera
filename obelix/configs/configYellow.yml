@@ -37,7 +37,7 @@ matrix_file: "calib_data/calib_matrixYellow.npy"
 #################################################################
 calib_check_time_in_sec: 1
 
-loc_aruco_x: 358.25
+loc_aruco_x: 356.25
 loc_aruco_y: 132.5
 
 loc_aruco_acceptable_diff: 1.1
@@ -49,23 +49,23 @@ loc_aruco_acceptable_diff: 1.1
 zones_to_retake:
   A:
     retake_time: 5
-    x1: 50
-    y1: 50 
-    x2: 150
-    y2: 150
+    x1: 420
+    y1: 220 
+    x2: 510
+    y2: 330
     
 zones_to_exclude:
   A:
     exclude_until_time: 5
-    x1: 50
-    y1: 50 
-    x2: 150
-    y2: 150
+    x1: 480
+    y1: 296 
+    x2: 600
+    y2: 420
 
 #################################################################
 # Background diff
 #################################################################
-threshold: 15
+threshold: 30
 
 enable_background_diff_from_file: 0
 
@@ -74,7 +74,7 @@ sub_file: "calib_data/background.png"
 #################################################################
 # Object extractor
 #################################################################
-noise_size: 500
+noise_size: 450
 
 min_robot_size: 2000
 
@@ -110,4 +110,4 @@ img_resize_after_fish: 1
 
 img_resize_after_perpective: 1
 
-img_resize_display: 1.2
+img_resize_display: 1

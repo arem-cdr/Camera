@@ -13,5 +13,5 @@
 
 exec 1>/tmp/rc.local.log 2>&1  # send stdout and stderr from rc.local to a log file
 set -x
-su pi -c "cd /home/pi/Documents/obelix/Camera/obelix && python3 main.py"  &
+su pi -c "cd /home/pi/Documents/c20/Camera/obelix && python3 main.py"  &
 exit 0

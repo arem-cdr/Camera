@@ -56,7 +56,7 @@ def main():
     # interests = CInterest(conf.points)
 
     # Auto regen background
-    # backupdate = BackgroundUp(conf)
+    backupdate = BackgroundUp(conf)
 
     # Some counters
     i = 0
@@ -103,7 +103,8 @@ def main():
         # Loading or Saving background
         if(i == 0):
             gex = NGExtractors(conf, img) 
-
+        # Background update
+        backupdate.update(img, start_t, gex)
         # Clearing buffer
         data.clear()
         # Get Data
@@ -112,8 +113,7 @@ def main():
         com.send_Point_list(data.red_gobelet, 2, conf)
         com.send_Point_list(data.robot, 3, conf)
         
-        # Background update
-        # backupdate.update(img, start_t, gex)
+        
 
         # Debug
         if(conf.debug):
