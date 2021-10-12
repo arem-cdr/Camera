@@ -2,7 +2,7 @@ imgutil
 imutils
 numpy
 opencv-contrib-python==4.0.1.24
-opencv-python==4.1.1.26
+opencv-python==4.2.0.32
 picamer
 pigpio
 pyserial
